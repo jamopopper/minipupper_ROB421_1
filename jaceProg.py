@@ -52,8 +52,10 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
+    angleMatrix = np.zeros((3,4))
+
     while True:
-        four_legs_inverse_kinematics(np.zeros((3,4)), config)
+        four_legs_inverse_kinematics(angleMatrix, config)
         time.sleep(0.1)
 
 
