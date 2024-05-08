@@ -4,6 +4,8 @@ sys.path.append('../StanfordQuadruped')
 
 import numpy as np
 import time
+import os
+import sys
 from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
@@ -14,6 +16,13 @@ from pupper.Kinematics import four_legs_inverse_kinematics, leg_explicit_inverse
 from MangDang.mini_pupper.display import Display
 from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
+
+
+def set_leg(servo, angle):
+
+    os.system("echo {} > /sys/class/pwm/pwmchip0/pwm{}/duty_cycle".format(angle, servo))
+    return True
+
 
 def main(use_imu=False):
     """Main program
@@ -52,14 +61,13 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    angleMatrix = np.zeros((3,4))
-
-    c = config.LEG_L1 / (2 ** 0.5)
-    offset = config.ABDUCTION_OFFSET
+    
 
     while True:
-        leg_explicit_inverse_kinematics(np.array([0,offset, -0.125]), 1, config)
-        time.sleep(0.1)
+
+        for i in range(2000000):
+            set_leg(10, 500000 + i)
+            time.sleep(0.1)
 
 
 main()
