@@ -54,7 +54,7 @@ def main(use_imu=False):
 
     angleMatrix = np.zeros((3,4))
 
-    c = config.LEG_L / (2 ** 0.5)
+    c = config.LEG_L1 / (2 ** 0.5)
     offset = config.ABDUCTION_OFFSET
 
     while True:
