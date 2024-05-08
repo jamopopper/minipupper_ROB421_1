@@ -67,7 +67,7 @@ def main(use_imu=False):
 
         for i in range(2000000):
             set_leg(10, 500000 + i)
-            time.sleep(0.1)
+            #time.sleep(0.1)
 
 
 main()
