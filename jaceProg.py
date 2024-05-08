@@ -65,8 +65,8 @@ def main(use_imu=False):
 
     while True:
 
-        for i in range(200):
-            set_leg(10, 500000 + (i * 10000))
+        for i in range(2000):
+            set_leg(10, 500000 + (i * 1000))
             #time.sleep(0.1)
 
 
