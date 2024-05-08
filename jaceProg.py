@@ -10,7 +10,7 @@ from src.JoystickInterface import JoystickInterface
 from src.State import BehaviorState, State
 from MangDang.mini_pupper.HardwareInterface import HardwareInterface
 from MangDang.mini_pupper.Config import Configuration
-from pupper.Kinematics import four_legs_inverse_kinematics
+from pupper.Kinematics import four_legs_inverse_kinematics, leg_explicit_inverse_kinematics
 from MangDang.mini_pupper.display import Display
 from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
@@ -54,8 +54,11 @@ def main(use_imu=False):
 
     angleMatrix = np.zeros((3,4))
 
+    c = config.LEG_L / (2 ** 0.5)
+    offset = config.ABDUCTION_OFFSET
+
     while True:
-        four_legs_inverse_kinematics(angleMatrix, config)
+        leg_explicit_inverse_kinematics(np.array([0,offset, -0.125]), 1, config)
         time.sleep(0.1)
 
 
