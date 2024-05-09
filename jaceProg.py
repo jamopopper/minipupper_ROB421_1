@@ -18,9 +18,24 @@ from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
 
 
-def set_leg(servo, angle):
 
-    os.system("echo {} > /sys/class/pwm/pwmchip0/pwm{}/duty_cycle".format(angle, servo))
+def set_gait(phase):
+    set_leg(0 + phase if phase < 5 else 0-4 + phase, 0.5, 0.5, 0)
+    set_leg(1 + phase if phase < 5 else 1-4 + phase, 0.3, 0, 0)
+    set_leg(2 + phase if phase < 5 else 2-4 + phase, 0.5, -0.5, 0)
+    set_leg(3 + phase if phase < 5 else 3-4 + phase, 0.2, 0, 0)
+    return True
+
+def set_leg(leg_num, length, angle, tilt):
+    set_joint((leg_num * 3) + 0, (tilt * 90) + 90)
+    set_joint((leg_num * 3) + 1, (length * 90) + 45)
+    set_joint((leg_num * 3) + 2, (angle * 90) + 45)
+    return True
+
+
+def set_joint(servo, angle):
+    angle_use = (angle * 11111) + 500000
+    os.system("echo {} > /sys/class/pwm/pwmchip0/pwm{}/duty_cycle".format(angle_use, servo))
     return True
 
 
@@ -65,9 +80,9 @@ def main(use_imu=False):
 
     while True:
 
-        for i in range(2000):
-            set_leg(10, 500000 + (i * 1000))
-            #time.sleep(0.1)
+        for i in range(180):
+            set_joint(10, i)
+            time.sleep(0.01)
 
 
 main()
