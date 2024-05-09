@@ -37,10 +37,38 @@ def activate():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
 
 def trot():
     drive_pub.send({"L1": 0, 
             "R1": 1, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
             "x": 0, 
             "circle": 0, 
             "triangle": 0, 
@@ -74,6 +102,20 @@ def move_forward(seconds):
             "dpadx": 0})
         if timeout < time.time():
             break
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
     
 def stop():
     drive_pub.send({"L1": 0, 
@@ -128,7 +170,7 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    #activate()
+    activate()
     time.sleep(0.5)
     trot()
     time.sleep(0.5)
