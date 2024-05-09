@@ -66,6 +66,8 @@ def forward():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})  
+    
+
 # TODO: create functions that allow the robot to move around (forward,back,right,left,....)
 # Remember: The inputs are mainly digital except for the lx,ly and rx,ry controls.
 # The digital inputs do not reset after being call unless you design them to! (i.e., if you press L1 it will remaind press)
@@ -76,6 +78,7 @@ if __name__ == "__main__":
     time.sleep(1)
     trot()
     time.sleep(1)
-    while True:
-        forward()
+    forward()
+    time.sleep(10)
+    activate()
     
