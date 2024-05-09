@@ -128,7 +128,7 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    activate()
+    #activate()
     time.sleep(0.5)
     trot()
     time.sleep(0.5)
@@ -137,19 +137,9 @@ def main(use_imu=False):
     time.sleep(0.5)
     trot()
     time.sleep(0.5)
-    #activate()
+    activate()
     time.sleep(0.5)
 
-
-    # while True:
-
-
-    #     for i in range(4):
-    #         set_gait(i)
-    #         time.sleep(1)
-    #     # for i in range(180):
-    #     #     set_joint(10, i)
-    #     #     time.sleep(0.01)
 
 
 main()
