@@ -137,7 +137,7 @@ def main(use_imu=False):
     time.sleep(0.5)
     trot()
     time.sleep(0.5)
-    activate()
+    #activate()
     time.sleep(0.5)
 
 
