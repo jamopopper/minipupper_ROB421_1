@@ -53,7 +53,7 @@ def trot():
     
 def forward():
     drive_pub.send({"L1": 0, 
-            "R1": 1, 
+            "R1": 0, 
             "x": 0, 
             "circle": 0, 
             "triangle": 0, 
