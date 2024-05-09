@@ -135,6 +135,8 @@ def main(use_imu=False):
     trot()
     time.sleep(0.5)
     activate()
+    time.sleep(0.5)
+
 
     # while True:
 
