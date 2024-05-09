@@ -37,6 +37,8 @@ def activate():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})
+
+def trot():
     drive_pub.send({"L1": 0, 
             "R1": 1, 
             "x": 0, 
@@ -123,9 +125,12 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
     activate()
+    trot()
     move_forward()
-    time.sleep(2)
+    time.sleep(3)
     stop()
+    trot()
+    activate()
 
     # while True:
 
