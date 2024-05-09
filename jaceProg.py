@@ -55,21 +55,25 @@ def trot():
             "dpadx": 0})
 
 
-def move_forward():
-    drive_pub.send({"L1": 0, 
+def move_forward(seconds):
+    timeout = time.time() + seconds
+    while True:
+        drive_pub.send({"L1": 0, 
             "R1": 0, 
             "x": 0, 
             "circle": 0, 
             "triangle": 0, 
             "L2": 0, 
             "R2": 0, 
-            "ly": 0, 
-            "lx": 1, 
+            "ly": 1, 
+            "lx": 0, 
             "rx": 0, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})
+        if timeout < time.time():
+            break
     
 def stop():
     drive_pub.send({"L1": 0, 
@@ -128,8 +132,7 @@ def main(use_imu=False):
     time.sleep(0.5)
     trot()
     time.sleep(0.5)
-    move_forward()
-    time.sleep(3)
+    move_forward(3)
     stop()
     time.sleep(0.5)
     trot()
