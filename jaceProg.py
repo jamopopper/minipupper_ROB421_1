@@ -81,9 +81,13 @@ def main(use_imu=False):
 
     while True:
 
-        for i in range(180):
-            set_joint(10, i)
-            time.sleep(0.01)
+
+        for i in range(4):
+            set_gait(i)
+            time.sleep(0.25)
+        # for i in range(180):
+        #     set_joint(10, i)
+        #     time.sleep(0.01)
 
 
 main()
