@@ -7,6 +7,7 @@ import time
 import os
 import sys
 from src.IMU import IMU
+from src.Command import Command
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
 from src.State import BehaviorState, State
