@@ -59,7 +59,7 @@ def forward():
             "triangle": 0, 
             "L2": 0, 
             "R2": 0, 
-            "ly": 0.6, 
+            "ly": 1, 
             "lx": 0, 
             "rx": 0, 
             "message_rate": 20, 
