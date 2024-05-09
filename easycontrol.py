@@ -74,7 +74,7 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    trot(1)
+    trot()
     time.sleep(1)
     while True:
         forward()
