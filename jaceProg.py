@@ -35,7 +35,7 @@ def set_leg(leg_num, length, angle, tilt):
 
 def set_joint(servo, angle):
     angle_use = (angle * 11111) + 500000
-    servo_use = servo + 0
+    servo_use = servo - 0
     os.system("echo {} > /sys/class/pwm/pwmchip0/pwm{}/duty_cycle".format(angle_use, servo_use))
     return True
 
@@ -84,7 +84,7 @@ def main(use_imu=False):
 
         for i in range(4):
             set_gait(i)
-            time.sleep(0.25)
+            time.sleep(1)
         # for i in range(180):
         #     set_joint(10, i)
         #     time.sleep(0.01)
