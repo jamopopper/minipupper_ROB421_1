@@ -16,29 +16,60 @@ from pupper.Kinematics import four_legs_inverse_kinematics, leg_explicit_inverse
 from MangDang.mini_pupper.display import Display
 from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
+from UDPComms import Publisher
 
 
-
-def set_gait(phase):
-    set_leg(0 + phase if phase < 5 else 0-4 + phase, 0.5, 0.5, 0)
-    set_leg(1 + phase if phase < 5 else 1-4 + phase, 0.3, 0, 0)
-    set_leg(2 + phase if phase < 5 else 2-4 + phase, 0.5, -0.5, 0)
-    set_leg(3 + phase if phase < 5 else 3-4 + phase, 0.2, 0, 0)
-    return True
-
-def set_leg(leg_num, length, angle, tilt):
-    set_joint((leg_num * 3) + 0, (tilt * 90) + 90)
-    set_joint((leg_num * 3) + 1, (length * 90) + 45)
-    set_joint((leg_num * 3) + 2, (angle * 90) + 45)
-    return True
+drive_pub = Publisher(8830) 
 
 
-def set_joint(servo, angle):
-    angle_use = (angle * 11111) + 500000
-    servo_use = servo - 0
-    os.system("echo {} > /sys/class/pwm/pwmchip0/pwm{}/duty_cycle".format(angle_use, servo_use))
-    return True
+def activate():
+    drive_pub.send({"L1": 1, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
 
+
+def move_forward():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 1, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
+    
+def stop():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
 
 def main(use_imu=False):
     """Main program
@@ -77,17 +108,20 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    
+    activate()
+    move_forward()
+    time.sleep(2)
+    stop()
 
-    while True:
+    # while True:
 
 
-        for i in range(4):
-            set_gait(i)
-            time.sleep(1)
-        # for i in range(180):
-        #     set_joint(10, i)
-        #     time.sleep(0.01)
+    #     for i in range(4):
+    #         set_gait(i)
+    #         time.sleep(1)
+    #     # for i in range(180):
+    #     #     set_joint(10, i)
+    #     #     time.sleep(0.01)
 
 
 main()
