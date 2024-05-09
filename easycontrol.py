@@ -78,7 +78,8 @@ if __name__ == "__main__":
     time.sleep(1)
     trot()
     time.sleep(1)
-    forward()
+    while True:
+        forward()
     time.sleep(10)
     activate()
     
