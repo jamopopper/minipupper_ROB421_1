@@ -125,11 +125,15 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
     activate()
+    time.sleep(0.5)
     trot()
+    time.sleep(0.5)
     move_forward()
     time.sleep(3)
     stop()
+    time.sleep(0.5)
     trot()
+    time.sleep(0.5)
     activate()
 
     # while True:
