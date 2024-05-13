@@ -92,11 +92,10 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    while True:
-        jump()
-        time.sleep(1)
-        jump()
-        time.sleep(1)
-        jump()
-        time.sleep(1)
+    jump()
+    time.sleep(.1)
+    jump()
+    time.sleep(.1)
+    jump()
+    time.sleep(.1)
     
