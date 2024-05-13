@@ -19,120 +19,6 @@ from src.danceSample import MovementLib
 from UDPComms import Publisher
 
 
-drive_pub = Publisher(8830) 
-
-
-def activate():
-    drive_pub.send({"L1": 1, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-    drive_pub.send({"L1": 0, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-
-def trot():
-    drive_pub.send({"L1": 0, 
-            "R1": 1, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-    drive_pub.send({"L1": 0, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-
-
-def move_forward(seconds):
-    timeout = time.time() + seconds
-    while True:
-        drive_pub.send({"L1": 0, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 1, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-        if timeout < time.time():
-            break
-    drive_pub.send({"L1": 0, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-    
-def stop():
-    drive_pub.send({"L1": 0, 
-            "R1": 0, 
-            "x": 0, 
-            "circle": 0, 
-            "triangle": 0, 
-            "L2": 0, 
-            "R2": 0, 
-            "ly": 0, 
-            "lx": 0, 
-            "rx": 0, 
-            "message_rate": 20, 
-            "ry": 0, 
-            "dpady": 0, 
-            "dpadx": 0})
-
 def main(use_imu=False):
     """Main program
     """
@@ -170,18 +56,73 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    activate()
-    time.sleep(0.5)
-    trot()
-    time.sleep(0.5)
-    move_forward(3)
-    stop()
-    time.sleep(0.5)
-    trot()
-    time.sleep(0.5)
-    activate()
-    time.sleep(0.5)
 
+    state.joint_angles[0, 0] = 0.5
+    state.joint_angles[0, 1] = 0
+    state.joint_angles[0, 2] = 1
+    state.joint_angles[0, 3] = 0.5
+    state.joint_angles[1, 0] = 0.5
+    state.joint_angles[1, 1] = 0
+    state.joint_angles[1, 2] = 1
+    state.joint_angles[1, 3] = 0.5
+    state.joint_angles[2, 0] = 0.5
+    state.joint_angles[2, 1] = 0
+    state.joint_angles[2, 2] = 1
+    state.joint_angles[2, 3] = 0.5
+    hardware_interface.set_actuator_postions(state.joint_angles)
+
+
+    # Wait until the activate button has been pressed
+    # while True:
+    #     print("Waiting for L1 to activate robot.")
+    #     while True:
+    #         command = joystick_interface.get_command(state, disp)
+    #         joystick_interface.set_color(config.ps4_deactivated_color)
+    #         if command.activate_event == 1:
+    #             break
+    #         time.sleep(0.1)
+    #     print("Robot activated.")
+    #     joystick_interface.set_color(config.ps4_color)
+
+    #     while True:
+    #         now = time.time()
+    #         if now - last_loop < config.dt:
+    #             continue
+    #         last_loop = time.time()
+
+    #         # Parse the udp joystick commands and then update the robot controller's parameters
+    #         command = joystick_interface.get_command(state, disp)
+    #         if command.activate_event == 1:
+    #             print("Deactivating Robot")
+    #             disp.show_state(BehaviorState.DEACTIVATED)
+    #             break
+
+    #         # Read imu data. Orientation will be None if no data was available
+    #         quat_orientation = (
+    #             imu.read_orientation() if use_imu else np.array([1, 0, 0, 0])
+    #         )
+    #         state.quat_orientation = quat_orientation
+
+    #         # If "circle" button is clicked, switch dance_active_state between False/True.
+    #         if command.dance_activate_event == True:
+    #             if dance_active_state == False:
+    #                 dance_active_state = True
+    #             else:
+    #                 dance_active_state = False
+
+    #         # Step the controller forward by dt
+    #         if dance_active_state == True:
+    #         	# Caculate legsLocation, attitudes and speed using custom movement script
+    #             movementCtl.runMovementScheme()
+    #             legsLocation = movementCtl.getMovemenLegsLocation()
+    #             attitudes    = movementCtl.getMovemenAttitude()
+    #             speed        = movementCtl.getMovemenSpeed()
+    #             controller.run(state, command, disp, legsLocation, attitudes, speed)
+    #         else:
+    #             controller.run(state, command, disp)
+
+    #         # Update the pwm widths going to the servos
+    #         hardware_interface.set_actuator_postions(state.joint_angles)
 
 
 main()
