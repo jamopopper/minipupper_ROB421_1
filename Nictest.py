@@ -1,6 +1,8 @@
 from UDPComms import Publisher
 import time 
 
+x = 0
+
 # drive_pub = Publisher(8830) = controls movement of pupper (basically mode 1)
 # arm_pub = Publisher(8410) = controls more movements of upper (mode 2)
 # mode 2 is what you can do when pupper is not in trot mode when using a controller.
@@ -140,8 +142,9 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    while True:
+    if x <= 10
         turnL()
         time.sleep(1)
         walkL()
         time.sleep(.1)
+        x += 1
