@@ -114,4 +114,9 @@ if __name__ == "__main__":
     time.sleep(.1)
     jump1()
     time.sleep(.1)
-    
+    jump2()
+    time.sleep(.1)
+    jump1()
+    time.sleep(.1)
+    jump2()
+    time.sleep(.1)
