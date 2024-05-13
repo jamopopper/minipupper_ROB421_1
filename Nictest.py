@@ -34,8 +34,40 @@ def activate():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})
-  
-def jump1():
+
+def turnL():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": -1, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
+    
+def walkL():
+    drive_pub.send({"L1": 1, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": -1, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
+
+def jump():
     drive_pub.send({"L1": 0, 
             "R1": 0, 
             "x": 1, 
@@ -51,7 +83,7 @@ def jump1():
             "dpady": 0, 
             "dpadx": 0})  
 
-def jump2():
+def null():
     drive_pub.send({"L1": 0, 
             "R1": 0, 
             "x": 0, 
@@ -108,15 +140,8 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    jump1()
-    time.sleep(.1)
-    jump2()
-    time.sleep(.1)
-    jump1()
-    time.sleep(.1)
-    jump2()
-    time.sleep(.1)
-    jump1()
-    time.sleep(.1)
-    jump2()
-    time.sleep(.1)
+    while True:
+        turnL()
+        time.sleep(.01)
+        walkL()
+        time.sleep(.01)
