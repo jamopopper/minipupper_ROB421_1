@@ -35,7 +35,7 @@ def activate():
             "dpady": 0, 
             "dpadx": 0})
   
-def jump():
+def jump1():
     drive_pub.send({"L1": 0, 
             "R1": 0, 
             "x": 1, 
@@ -50,6 +50,22 @@ def jump():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})  
+
+def jump2():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0}) 
 
 def trot():
     drive_pub.send({"L1": 0, 
@@ -92,10 +108,10 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    jump()
+    jump1()
     time.sleep(.1)
-    jump()
+    jump2()
     time.sleep(.1)
-    jump()
+    jump1()
     time.sleep(.1)
     
