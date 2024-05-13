@@ -142,6 +142,6 @@ if __name__ == "__main__":
     time.sleep(1)
     while True:
         turnL()
-        time.sleep(1)
+        time.sleep(.01)
         walkL()
-        time.sleep(1)
+        time.sleep(.01)
