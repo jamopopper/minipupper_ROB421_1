@@ -6,6 +6,6 @@ drive_pub = Publisher(8830)
 
 if __name__ == "__main__":
     disp = Display()
-    disp.show_image("\img\elbow.jpg")
+    disp.show_image("img/elbow.jpg")
 
     
