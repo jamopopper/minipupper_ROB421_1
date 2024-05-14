@@ -142,7 +142,7 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    for x <= 10:
+    if x <= 10:
         turnL()
         time.sleep(1)
         walkL()
