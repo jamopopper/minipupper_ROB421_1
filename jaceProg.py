@@ -57,18 +57,18 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    state.joint_angles[0, 0] = 3
-    state.joint_angles[0, 1] = 3
-    state.joint_angles[0, 2] = 3
-    state.joint_angles[0, 3] = 0.5
-    state.joint_angles[1, 0] = 0.5
-    state.joint_angles[1, 1] = 3
-    state.joint_angles[1, 2] = 1
-    state.joint_angles[1, 3] = 3
-    state.joint_angles[2, 0] = 0.5
-    state.joint_angles[2, 1] = 3
-    state.joint_angles[2, 2] = 1
-    state.joint_angles[2, 3] = 0.5
+    state.joint_angles[0, 0] = 0
+    state.joint_angles[0, 1] = 0
+    state.joint_angles[0, 2] = 0
+    state.joint_angles[0, 3] = 0
+    state.joint_angles[1, 0] = 1
+    state.joint_angles[1, 1] = 1
+    state.joint_angles[1, 2] = 0
+    state.joint_angles[1, 3] = 0
+    state.joint_angles[2, 0] = 0
+    state.joint_angles[2, 1] = 1
+    state.joint_angles[2, 2] = 0
+    state.joint_angles[2, 3] = 1
     hardware_interface.set_actuator_postions(state.joint_angles)
 
 
