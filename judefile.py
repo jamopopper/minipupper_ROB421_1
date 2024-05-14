@@ -6,7 +6,7 @@ drive_pub = Publisher(8830)
 
 if __name__ == "__main__":
     disp = Display()
-    while(time.sleep(10)):
-        disp.show_image("img/elbow.jpg")
+    disp.show_image("img/elbow.jpg")
+    time.sleep(1)
 
     
