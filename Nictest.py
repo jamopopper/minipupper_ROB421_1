@@ -148,6 +148,12 @@ if __name__ == "__main__":
     while True:
         turnL()
         walkL()
+        turnL()
+        walkL()
+        turnL()
+        walkL()
+        turnL()
+        walkL()
 
         #hf
 
