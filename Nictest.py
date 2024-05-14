@@ -147,4 +147,5 @@ if __name__ == "__main__":
         time.sleep(1)
         walkL()
         time.sleep(.1)
-        x += 1
+        x = x+1
+        
