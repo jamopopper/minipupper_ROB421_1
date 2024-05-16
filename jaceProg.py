@@ -64,12 +64,12 @@ def stand(array, height=127, lean=0, leg=4):
 
 def dance(array, frame): 
     # array is the given servo array
-    # frame goes from 0-255
+    # frame goes from 0-1
 
     # moves in a circle
 
-    servo_sin = np.sin((6.28) * (frame/256))
-    servo_cos = (-np.cos((6.28) * (frame/256)) + 1) / 2
+    servo_sin = np.sin((6.28) * frame)
+    servo_cos = (-np.cos((6.28) * frame) + 1) / 2
     store = stand(array, servo_cos*255, servo_sin*63)
     print(store)
     return store
@@ -119,8 +119,8 @@ def main(use_imu=False):
     
 
     while True:
-        for i in range(256):
-            store = dance(state.joint_angles, i)
+        for i in range(128):
+            store = dance(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)
