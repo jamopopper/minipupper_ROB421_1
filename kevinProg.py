@@ -155,8 +155,5 @@ if __name__ == '__main__':
                     right()
                     print("right")
                else:
+                    default()
                     print("this button does nothing")
-               
-          else:
-              default() 
-              print("defaulted")
