@@ -19,7 +19,7 @@ from src.danceSample import MovementLib
 from UDPComms import Publisher
 
 
-def servo_smoothing(next_array, previous_array, smooth_ratio=0.1):
+def servo_smoothing(next_array, previous_array, smooth_ratio=0.5):
     # next_array is the positions you want to set the servos to
     # previous_array is the positions currently set for the servos
     # smooth_ratio goes from 0-1, larger is less smoothing
@@ -59,7 +59,7 @@ def stand(array, height=127, lean=0, leg=4):
         copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     
-    return copy
+    return servo_smoothing(copy, array)
 
 def dance(array, frame): 
     # array is the given servo array
@@ -119,8 +119,7 @@ def main(use_imu=False):
     while True:
         for i in range(128):
             store = dance(state.joint_angles, i/128)
-            store_final = servo_smoothing(store, state.joint_angles)
-            state.joint_angles = store_final
+            state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)
 
