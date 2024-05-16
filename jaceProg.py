@@ -121,6 +121,6 @@ def main(use_imu=False):
             store = dance(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.1)
+            time.sleep(0.01)
 
 main()
