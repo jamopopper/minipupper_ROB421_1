@@ -146,16 +146,6 @@ if __name__ == "__main__":
     time.sleep(.1)
     #if x <= 10:
     while True:
-        turnL()
-        walkL()
-        time.sleep(.1)
-        turnL()
-        walkL()
-        time.sleep(.1)
-        turnL()
-        walkL()
-        time.sleep(.1)
-        turnL()
         walkL()
 
 
