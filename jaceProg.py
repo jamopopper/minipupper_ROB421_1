@@ -62,14 +62,14 @@ def main(use_imu=False):
         state.joint_angles[0, 1] = 0
         state.joint_angles[0, 2] = 0
         state.joint_angles[0, 3] = 0
-        state.joint_angles[1, 0] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 1] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 2] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 3] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 0] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 1] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 2] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 3] = -(3.14/(((i/256)*9)+2.25))
+        state.joint_angles[1, 0] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 1] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 2] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 3] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 0] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 1] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 2] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 3] = -(3.14/(((i/256)*9)+3))
         hardware_interface.set_actuator_postions(state.joint_angles)
         time.sleep(0.01)
 
@@ -78,14 +78,14 @@ def main(use_imu=False):
         state.joint_angles[0, 1] = 0
         state.joint_angles[0, 2] = 0
         state.joint_angles[0, 3] = 0
-        state.joint_angles[1, 0] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 1] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 2] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[1, 3] = (3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 0] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 1] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 2] = -(3.14/(((i/256)*9)+2.25))
-        state.joint_angles[2, 3] = -(3.14/(((i/256)*9)+2.25))
+        state.joint_angles[1, 0] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 1] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 2] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[1, 3] = (3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 0] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 1] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 2] = -(3.14/(((i/256)*9)+3))
+        state.joint_angles[2, 3] = -(3.14/(((i/256)*9)+3))
         hardware_interface.set_actuator_postions(state.joint_angles)
         time.sleep(0.01)
     # for iteration in range(1024):
