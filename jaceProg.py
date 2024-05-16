@@ -43,10 +43,10 @@ def stand(array, height=127, lean=0, leg=4):
     # lower joints (2) go from -0.1 to -0.728
 
     if leg == 4:
-        array[0, 0] = (lean/64) * 0.45
-        array[0, 1] = (lean/64) * 0.45
-        array[0, 2] = (lean/64) * 0.45
-        array[0, 3] = (lean/64) * 0.45
+        array[0, 0] = (lean/64) * 0.4
+        array[0, 1] = (lean/64) * 0.4
+        array[0, 2] = (lean/64) * 0.4
+        array[0, 3] = (lean/64) * 0.4
         array[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         array[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         array[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2)
@@ -56,7 +56,7 @@ def stand(array, height=127, lean=0, leg=4):
         array[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2)
         array[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     else:
-        array[0, leg] = (lean/64) * 0.45
+        array[0, leg] = (lean/64) * 0.4
         array[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         array[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     
