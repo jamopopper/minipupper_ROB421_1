@@ -136,23 +136,23 @@ if __name__ == '__main__':
      while True:
           if ser.in_waiting > 0:
                line = ser.readline().decode('utf-8').rstrip()
-               print(line)
-               if line == 69:
+               print("(" + line + ")")
+               if line == "69":
                     activate()
                     print("activated")
-               elif line == 71:
+               elif line == "71":
                     trot()
                     print("trot")
-               elif line == 70:
+               elif line == "70":
                     forward()
                     print("forward")
-               elif line == 21:
+               elif line == "21":
                     backward()
                     print("backward")
-               elif line == 68:
+               elif line == "68":
                     left()
                     print("left")
-               elif line == 67:
+               elif line == "67":
                     right()
                     print("right")
                else:
