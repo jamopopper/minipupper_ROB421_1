@@ -58,10 +58,10 @@ def main(use_imu=False):
 
     while True:
         for i in range(100):
-            state.joint_angles[0, 0] = 0.1
-            state.joint_angles[0, 1] = 0.1
-            state.joint_angles[0, 2] = 0.1
-            state.joint_angles[0, 3] = 0.1
+            state.joint_angles[0, 0] = 0.3
+            state.joint_angles[0, 1] = 0.3
+            state.joint_angles[0, 2] = 0.3
+            state.joint_angles[0, 3] = 0.3
             state.joint_angles[1, 0] = (3.14/(((i/100)*8)+2.5))
             state.joint_angles[1, 1] = (3.14/(((i/100)*8)+2.5))
             state.joint_angles[1, 2] = (3.14/(((i/100)*8)+2.5))
@@ -74,10 +74,10 @@ def main(use_imu=False):
             time.sleep(0.01)
 
         for i in reversed(range(100)):
-            state.joint_angles[0, 0] = -0.1
-            state.joint_angles[0, 1] = -0.1
-            state.joint_angles[0, 2] = -0.1
-            state.joint_angles[0, 3] = -0.1
+            state.joint_angles[0, 0] = -0.3
+            state.joint_angles[0, 1] = -0.3
+            state.joint_angles[0, 2] = -0.3
+            state.joint_angles[0, 3] = -0.3
             state.joint_angles[1, 0] = (3.14/(((i/100)*8)+3))
             state.joint_angles[1, 1] = (3.14/(((i/100)*8)+3))
             state.joint_angles[1, 2] = (3.14/(((i/100)*8)+3))
