@@ -47,18 +47,18 @@ def stand(array, height=127, lean=0, leg=4):
         array[0, 1] = (lean/64) * 0.5
         array[0, 2] = (lean/64) * 0.5
         array[0, 3] = (lean/64) * 0.5
-        array[1, 0] = ((3.14/4) * ((256-height)/256) + 0.1)
-        array[1, 1] = ((3.14/4) * ((256-height)/256) + 0.1)
-        array[1, 2] = ((3.14/4) * ((256-height)/256) + 0.1)
-        array[1, 3] = ((3.14/4) * ((256-height)/256) + 0.1)
-        array[2, 0] = -((3.14/4) * ((256-height)/256) + 0.1)
-        array[2, 1] = -((3.14/4) * ((256-height)/256) + 0.1)
-        array[2, 2] = -((3.14/4) * ((256-height)/256) + 0.1)
-        array[2, 3] = -((3.14/4) * ((256-height)/256) + 0.1)
+        array[1, 0] = ((3.14/3) * ((256-height)/256) + 0.1)
+        array[1, 1] = ((3.14/3) * ((256-height)/256) + 0.1)
+        array[1, 2] = ((3.14/3) * ((256-height)/256) + 0.1)
+        array[1, 3] = ((3.14/3) * ((256-height)/256) + 0.1)
+        array[2, 0] = -((3.14/3) * ((256-height)/256) + 0.1)
+        array[2, 1] = -((3.14/3) * ((256-height)/256) + 0.1)
+        array[2, 2] = -((3.14/3) * ((256-height)/256) + 0.1)
+        array[2, 3] = -((3.14/3) * ((256-height)/256) + 0.1)
     else:
         array[0, leg] = (lean/64) * 0.5
-        array[1, leg] = ((3.14/4) * ((256-height)/256) + 0.1)
-        array[2, leg] = -((3.14/4) * ((256-height)/256) + 0.1)
+        array[1, leg] = ((3.14/3) * ((256-height)/256) + 0.1)
+        array[2, leg] = -((3.14/3) * ((256-height)/256) + 0.1)
     
     return array
 
@@ -111,7 +111,7 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    store = stand(state.joint_angles, -10)
+    store = stand(state.joint_angles, 0)
     state.joint_angles = store
     hardware_interface.set_actuator_postions(state.joint_angles)
     time.sleep(1)
