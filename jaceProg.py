@@ -19,7 +19,7 @@ from src.danceSample import MovementLib
 from UDPComms import Publisher
 
 
-def servo_smoothing(next_array, previous_array, smooth_ratio=0.7):
+def servo_smoothing(next_array, previous_array, smooth_ratio=0.1):
     # next_array is the positions you want to set the servos to
     # previous_array is the positions currently set for the servos
     # smooth_ratio goes from 0-1, larger is less smoothing
