@@ -147,5 +147,6 @@ if __name__ == "__main__":
     #if x <= 10:
     while True:
         walkL()
+        turnL()
 
 #fnan
