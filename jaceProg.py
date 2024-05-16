@@ -19,6 +19,60 @@ from src.danceSample import MovementLib
 from UDPComms import Publisher
 
 
+def servo_smoothing(next_array, previous_array):
+    # next_array is the positions you want to set the servos to
+    # previous_array is the positions currently set for the servos
+
+    # smooth_ratio goes from 0-1, larger is faster
+
+    smooth_ratio = 0.9
+
+    store = (next_array * smooth_ratio) + (previous_array * (1-smooth_ratio))
+
+    return store
+
+
+def stand(array, height=127, lean=0, leg=4): 
+    # array is the given servo array
+    # height (default=127) goes from 0-255
+    # lean (default=0) goes from 0-63 positive and negative 
+    # leg (default=4) specifies setting values to a specific leg, 4 applies to all
+
+    # shoulders (0) go from 0.5 to -0.5
+    # upper joints (1) go from 0.1 to 0.728
+    # lower joints (2) go from -0.1 to -0.728
+
+    if leg == 4:
+        array[0, 0] = (lean/64) * 0.5
+        array[0, 1] = (lean/64) * 0.5
+        array[0, 2] = (lean/64) * 0.5
+        array[0, 3] = (lean/64) * 0.5
+        array[1, 0] = ((3.14/5) * ((256-height)/256) + 0.1)
+        array[1, 1] = ((3.14/5) * ((256-height)/256) + 0.1)
+        array[1, 2] = ((3.14/5) * ((256-height)/256) + 0.1)
+        array[1, 3] = ((3.14/5) * ((256-height)/256) + 0.1)
+        array[2, 0] = -((3.14/5) * ((256-height)/256) + 0.1)
+        array[2, 1] = -((3.14/5) * ((256-height)/256) + 0.1)
+        array[2, 2] = -((3.14/5) * ((256-height)/256) + 0.1)
+        array[2, 3] = -((3.14/5) * ((256-height)/256) + 0.1)
+    else:
+        array[0, leg] = (lean/64) * 0.5
+        array[1, leg] = ((3.14/5) * ((256-height)/256) + 0.1)
+        array[2, leg] = -((3.14/5) * ((256-height)/256) + 0.1)
+    
+    return array
+
+def dance(array, frame): 
+    # array is the given servo array
+    # frame goes from 0-255
+
+    # moves in a circle
+
+    servo_sin = np.sin((3.14) * (frame/256))
+    servo_cos = (-np.cos((3.14) * (frame/256)) + 1) / 2
+    store = stand(array, servo_sin, servo_cos)
+    return store
+
 def main(use_imu=False):
     """Main program
     """
@@ -57,106 +111,10 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
     while True:
-        for i in range(100):
-            state.joint_angles[0, 0] = np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 1] = np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 2] = np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 3] = np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[1, 0] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 1] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 2] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 3] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 0] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 1] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 2] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 3] = -((3.14/5) * (i/100) + 0.1)
+        for i in range(256):
+            store = dance(state.joint_angles, i)
+            state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)
-
-        for i in reversed(range(100)):
-            state.joint_angles[0, 0] = -np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 1] = -np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 2] = -np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[0, 3] = -np.sin((3.14) * (i/100)) * 0.3
-            state.joint_angles[1, 0] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 1] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 2] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[1, 3] = ((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 0] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 1] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 2] = -((3.14/5) * (i/100) + 0.1)
-            state.joint_angles[2, 3] = -((3.14/5) * (i/100) + 0.1)
-            hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
-
-    
-    # for iteration in range(1024):
-    #     state.joint_angles[1, 0] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[1, 1] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[1, 2] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[1, 3] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     hardware_interface.set_actuator_postions(state.joint_angles)
-    #     time.sleep(8/1024)
-    #     state.joint_angles[2, 0] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[2, 1] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[2, 2] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     state.joint_angles[2, 3] = (3.14/3)*(iteration/1024) + (3.14/6)
-    #     hardware_interface.set_actuator_postions(state.joint_angles)
-    #     time.sleep(8/1024)
-
-
-
-    # Wait until the activate button has been pressed
-    # while True:
-    #     print("Waiting for L1 to activate robot.")
-    #     while True:
-    #         command = joystick_interface.get_command(state, disp)
-    #         joystick_interface.set_color(config.ps4_deactivated_color)
-    #         if command.activate_event == 1:
-    #             break
-    #         time.sleep(0.1)
-    #     print("Robot activated.")
-    #     joystick_interface.set_color(config.ps4_color)
-
-    #     while True:
-    #         now = time.time()
-    #         if now - last_loop < config.dt:
-    #             continue
-    #         last_loop = time.time()
-
-    #         # Parse the udp joystick commands and then update the robot controller's parameters
-    #         command = joystick_interface.get_command(state, disp)
-    #         if command.activate_event == 1:
-    #             print("Deactivating Robot")
-    #             disp.show_state(BehaviorState.DEACTIVATED)
-    #             break
-
-    #         # Read imu data. Orientation will be None if no data was available
-    #         quat_orientation = (
-    #             imu.read_orientation() if use_imu else np.array([1, 0, 0, 0])
-    #         )
-    #         state.quat_orientation = quat_orientation
-
-    #         # If "circle" button is clicked, switch dance_active_state between False/True.
-    #         if command.dance_activate_event == True:
-    #             if dance_active_state == False:
-    #                 dance_active_state = True
-    #             else:
-    #                 dance_active_state = False
-
-    #         # Step the controller forward by dt
-    #         if dance_active_state == True:
-    #         	# Caculate legsLocation, attitudes and speed using custom movement script
-    #             movementCtl.runMovementScheme()
-    #             legsLocation = movementCtl.getMovemenLegsLocation()
-    #             attitudes    = movementCtl.getMovemenAttitude()
-    #             speed        = movementCtl.getMovemenSpeed()
-    #             controller.run(state, command, disp, legsLocation, attitudes, speed)
-    #         else:
-    #             controller.run(state, command, disp)
-
-    #         # Update the pwm widths going to the servos
-    #         hardware_interface.set_actuator_postions(state.joint_angles)
-
 
 main()
