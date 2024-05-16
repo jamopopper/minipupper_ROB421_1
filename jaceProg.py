@@ -110,11 +110,17 @@ def main(use_imu=False):
     print("z clearance: ", config.z_clearance)
     print("x shift: ", config.x_shift)
 
-    while True:
-        for i in range(256):
-            store = dance(state.joint_angles, i)
-            state.joint_angles = store
-            hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
+
+    store = stand(state.joint_angles)
+    state.joint_angles = store
+    hardware_interface.set_actuator_postions(state.joint_angles)
+    time.sleep(1)
+
+    # while True:
+    #     for i in range(256):
+    #         store = dance(state.joint_angles, i)
+    #         state.joint_angles = store
+    #         hardware_interface.set_actuator_postions(state.joint_angles)
+    #         time.sleep(0.01)
 
 main()
