@@ -35,7 +35,7 @@ def servo_smoothing(next_array, previous_array):
 def stand(array, height=127, lean=0, leg=4): 
     # array is the given servo array
     # height (default=127) goes from 0-255
-    # lean (default=0) goes from 0-63 positive and negative 
+    # lean (default=0) goes from 0-63 positive and negative, positive moves body to the right
     # leg (default=4) specifies setting values to a specific leg, 4 applies to all
 
     # shoulders (0) go from 0.5 to -0.5
@@ -111,25 +111,17 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    store = stand(state.joint_angles, 127, 63)
-    state.joint_angles = store
-    hardware_interface.set_actuator_postions(state.joint_angles)
-    time.sleep(1)
-    store = stand(state.joint_angles, 127, -63)
-    state.joint_angles = store
-    hardware_interface.set_actuator_postions(state.joint_angles)
-    time.sleep(1)
-    store = stand(state.joint_angles, 127, 0)
+    store = stand(state.joint_angles)
     state.joint_angles = store
     hardware_interface.set_actuator_postions(state.joint_angles)
     time.sleep(1)
     
 
-    # while True:
-    #     for i in range(256):
-    #         store = dance(state.joint_angles, i)
-    #         state.joint_angles = store
-    #         hardware_interface.set_actuator_postions(state.joint_angles)
-    #         time.sleep(0.01)
+    while True:
+        for i in range(256):
+            store = dance(state.joint_angles, i)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(0.01)
 
 main()
