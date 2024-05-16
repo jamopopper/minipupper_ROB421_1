@@ -70,6 +70,7 @@ def dance(array, frame):
 
     servo_sin = np.sin((3.14) * (frame/256))
     servo_cos = (-np.cos((3.14) * (frame/256)) + 1) / 2
+    print(servo_sin "+" servo_cos)
     store = stand(array, servo_sin, servo_cos)
     return store
 
