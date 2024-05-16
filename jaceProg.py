@@ -117,8 +117,8 @@ def main(use_imu=False):
     
 
     while True:
-        for i in range(12):
-            store = dance(state.joint_angles, i/12)
+        for i in range(128):
+            store = dance(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.1)
