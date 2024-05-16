@@ -111,14 +111,11 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    store = stand(state.joint_angles, 0)
+    store = stand(state.joint_angles)
     state.joint_angles = store
     hardware_interface.set_actuator_postions(state.joint_angles)
     time.sleep(1)
-    store = stand(state.joint_angles, 255)
-    state.joint_angles = store
-    hardware_interface.set_actuator_postions(state.joint_angles)
-    time.sleep(1)
+    
 
     # while True:
     #     for i in range(256):
