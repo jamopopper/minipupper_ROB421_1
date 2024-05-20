@@ -5,7 +5,6 @@ sys.path.append('../StanfordQuadruped')
 import numpy as np
 import time
 import os
-import sys
 from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
@@ -25,11 +24,12 @@ def servo_smoothing(next_array, previous_array, smooth_ratio=0.5):
     # smooth_ratio goes from 0-1, larger is less smoothing
 
     store = (next_array * smooth_ratio) + (previous_array * (1-smooth_ratio))
-
+    print("PREV: ", previous_array, "NOW: ", store, "NEXT: ", next_array)
+    print("\n")
     return store
 
 
-def stand(array, height=127, lean=0, leg=4): 
+def stand(array, height=127, lean=0, roll=0, leg=4): 
     # array is the given servo array
     # height (default=127) goes from 0-255
     # lean (default=0) goes from 0-63 positive and negative, positive moves body to the right
@@ -38,28 +38,45 @@ def stand(array, height=127, lean=0, leg=4):
     # shoulders (0) go from 0.5 to -0.5
     # upper joints (1) go from 0.1 to 0.728
     # lower joints (2) go from -0.1 to -0.728
+    # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left.
 
     copy = array
 
     if leg == 4:
-        copy[0, 0] = (lean/64) * 0.4
-        copy[0, 1] = (lean/64) * 0.4
-        copy[0, 2] = (lean/64) * 0.4
-        copy[0, 3] = (lean/64) * 0.4
-        copy[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2)
-        copy[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2)
-        copy[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2)
-        copy[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[0, 0] = (roll/64) * 0.4
+        copy[0, 1] = (roll/64) * 0.4
+        copy[0, 2] = (roll/64) * 0.4
+        copy[0, 3] = (roll/64) * 0.4
+        copy[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
         copy[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     else:
-        copy[0, leg] = (lean/64) * 0.4
+        copy[0, leg] = (roll/64) * 0.4
         copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     
     return servo_smoothing(copy, array)
+
+def walk_control(array, direction, lead_set, frame):
+    # array is the given servo array
+    # direction is the direction you want to step toward and goes from 0-1
+    # lead_set is the set of feet that are leading the step
+    # frame is how far you are through the step and goes from 0-1
+
+    # direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
+    # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
+    # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
+
+    stand()
+
+    return store
+
+
 
 def dance(array, frame): 
     # array is the given servo array
@@ -69,7 +86,7 @@ def dance(array, frame):
 
     servo_sin = np.sin((6.28) * frame)
     servo_cos = (-np.cos((6.28) * frame) + 1) / 2
-    store = stand(array, servo_cos*255, servo_sin*63)
+    store = stand(array, height=servo_cos*255, roll=servo_sin*63)
     return store
 
 def main(use_imu=False):
@@ -119,7 +136,11 @@ def main(use_imu=False):
     while True:
         for i in range(128):
             store = dance(state.joint_angles, i/128)
-            state.joint_angles = store
+
+            store_final = servo_smoothing(store, state.joint_angles)
+            state.joint_angles = store_final
+            # state.joint_angles = store
+
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)
 
