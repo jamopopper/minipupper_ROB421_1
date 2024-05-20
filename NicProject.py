@@ -6,7 +6,6 @@ import numpy as np
 import time
 import os
 import sys
-import jaceProg
 from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
@@ -18,6 +17,65 @@ from MangDang.mini_pupper.display import Display
 from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
 from UDPComms import Publisher
+
+def servo_smoothing(next_array, previous_array, smooth_ratio=0.5):
+    # next_array is the positions you want to set the servos to
+    # previous_array is the positions currently set for the servos
+    # smooth_ratio goes from 0-1, larger is less smoothing
+
+    store = (next_array * smooth_ratio) + (previous_array * (1-smooth_ratio))
+    print("PREV: ", previous_array, "NOW: ", store, "NEXT: ", next_array)
+    print("\n")
+    return store
+
+def stand(array, height=127, lean=0, roll=0, leg=4): 
+    # array is the given servo array
+    # height (default=127) goes from 0-255
+    # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
+    # roll (default=0) goes from 0-63 positive and negative, positive moves body to the right
+    # leg (default=4) specifies setting values to a specific leg
+
+    # shoulders (0) go from 0.5 to -0.5
+    # upper joints (1) go from 0.1 to 0.728
+    # lower joints (2) go from -0.1 to -0.728
+    # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left
+    # leg 4 is all legs, 5 is front-left and back-right, 6 is front-right and back-left
+
+    copy = array
+    
+    if leg == 6:
+        copy[0, 1] = (roll/64) * 0.4
+        copy[0, 2] = (roll/64) * 0.4
+        copy[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    elif leg == 5:
+        copy[0, 0] = (roll/64) * 0.4
+        copy[0, 3] = (roll/64) * 0.4
+        copy[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    elif leg == 4:
+        copy[0, 0] = (roll/64) * 0.4
+        copy[0, 1] = (roll/64) * 0.4
+        copy[0, 2] = (roll/64) * 0.4
+        copy[0, 3] = (roll/64) * 0.4
+        copy[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    else:
+        copy[0, leg] = (roll/64) * 0.4
+        copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    
+    return copy
 
 def walk0(array, phase):
     servo_sin = np.sin((6.28) * phase)
