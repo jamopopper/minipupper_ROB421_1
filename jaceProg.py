@@ -149,7 +149,16 @@ def main(use_imu=False):
 
     while True:
         for i in range(128):
-            store = dance(state.joint_angles, i/128)
+            # store = dance(state.joint_angles, i/128)
+            store = walk_control(state.joint_angles, 0, 0, i/128)
+
+            state.joint_angles = store
+
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(0.01)
+        for i in reversed(range(128)):
+            # store = dance(state.joint_angles, i/128)
+            store = walk_control(state.joint_angles, 0, 0, i/128)
 
             state.joint_angles = store
 
