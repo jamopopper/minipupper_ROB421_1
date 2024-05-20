@@ -32,7 +32,8 @@ def servo_smoothing(next_array, previous_array, smooth_ratio=0.5):
 def stand(array, height=127, lean=0, roll=0, leg=4): 
     # array is the given servo array
     # height (default=127) goes from 0-255
-    # lean (default=0) goes from 0-63 positive and negative, positive moves body to the right
+    # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
+    # roll (default=0) goes from 0-63 positive and negative, positive moves body to the right
     # leg (default=4) specifies setting values to a specific leg, 4 applies to all
 
     # shoulders (0) go from 0.5 to -0.5
@@ -60,7 +61,7 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
         copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2)
         copy[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     
-    return servo_smoothing(copy, array)
+    return copy
 
 def walk_control(array, direction, lead_set, frame):
     # array is the given servo array
