@@ -34,16 +34,31 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
     # height (default=127) goes from 0-255
     # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
     # roll (default=0) goes from 0-63 positive and negative, positive moves body to the right
-    # leg (default=4) specifies setting values to a specific leg, 4 applies to all
+    # leg (default=4) specifies setting values to a specific leg
 
     # shoulders (0) go from 0.5 to -0.5
     # upper joints (1) go from 0.1 to 0.728
     # lower joints (2) go from -0.1 to -0.728
-    # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left.
+    # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left
+    # leg 4 is all legs, 5 is front-left and back-right, 6 is front-right and back-left
 
     copy = array
-
-    if leg == 4:
+    
+    if leg == 6:
+        copy[0, 1] = (roll/64) * 0.4
+        copy[0, 2] = (roll/64) * 0.4
+        copy[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    elif leg == 5:
+        copy[0, 0] = (roll/64) * 0.4
+        copy[0, 3] = (roll/64) * 0.4
+        copy[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
+        copy[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
+    elif leg == 4:
         copy[0, 0] = (roll/64) * 0.4
         copy[0, 1] = (roll/64) * 0.4
         copy[0, 2] = (roll/64) * 0.4
@@ -58,7 +73,7 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
         copy[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     else:
         copy[0, leg] = (roll/64) * 0.4
-        copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2)
+        copy[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5))
         copy[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2)
     
     return copy
@@ -73,9 +88,18 @@ def walk_control(array, direction, lead_set, frame):
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
-    stand()
+    store
 
-    return store
+    if lead_set == 0:
+        store = stand(array, 127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array = stand(store, 127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        store = array
+    else:
+        store = stand(array, 127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array = stand(store, 127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        store = array
+
+    return array
 
 
 
