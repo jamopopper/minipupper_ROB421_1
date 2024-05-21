@@ -37,7 +37,7 @@ while True:
                 2,
                 cv.LINE_AA,
             )
-            # print(ids, "  ", corners)
+            print(ids, "  ", corners)
     """cv.imshow("frame", frame)
     key = cv.waitKey(1)
     if key == ord("q"):
