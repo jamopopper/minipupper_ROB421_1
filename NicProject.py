@@ -80,25 +80,25 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
 def walk0(array, phase):
     servo_sin = np.sin((6.28) * phase)
     servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = stand(array, 1 - servo_cos*255, 0, servo_sin*63, 0)
+    store = stand(array, servo_cos*255, 0, servo_sin*63, 0)
     return store
 
 def walk2(array, phase):
     servo_sin = np.sin((6.28) * phase)
     servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = stand(array, 1 - servo_cos*255, 0, servo_sin*63, 2)
+    store = stand(array, servo_cos*255, 0, servo_sin*63, 2)
     return store
 
 def walk1(array, phase):
     servo_sin = np.sin((6.28) * phase)
     servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = stand(array, 1 - servo_cos*255, 0, servo_sin*63, 1)
+    store = stand(array, servo_cos*255, 0, servo_sin*63, 1)
     return store
 
 def walk3(array, phase):
     servo_sin = np.sin((6.28) * phase)
     servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = stand(array, 1 - servo_cos*255, 0, servo_sin*63, 3)
+    store = stand(array, servo_cos*255, 0, servo_sin*63, 3)
     return store
 
 def main(use_imu=False):
@@ -146,13 +146,13 @@ def main(use_imu=False):
     
 
     while True:
-        for i in range(128):
+        for i in reversed(range(128)):
             store = walk0(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)
         for i in range(128):
-            store = walk2(state.joint_angles, i/128 - 128)
+            store = walk2(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)           
