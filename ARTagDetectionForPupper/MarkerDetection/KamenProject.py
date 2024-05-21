@@ -141,7 +141,7 @@ while True:
                 cv.LINE_AA,
             )
             print(ids, "  ", corners)
-            while True
+            while True:
                 for i in range(128):
                     store = walk0(state.joint_angles, i/128)
                     state.joint_angles = store
