@@ -78,7 +78,7 @@ def walk_control(array, direction, lead_set, frame):
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
-    store
+    store = array
 
     if lead_set == 0:
         store = stand(array, 127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
