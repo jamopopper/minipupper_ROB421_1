@@ -67,6 +67,7 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
     
     return copy
 
+
 def walk_control(array, direction, lead_set, frame):
     # array is the given servo array
     # direction is the direction you want to step toward and goes from 0-1
@@ -91,6 +92,22 @@ def walk_control(array, direction, lead_set, frame):
     return array
 
 
+def keyframe(array, duration, end_pos, hw_face):
+    start_time = time.time()
+    while (time.time() - start_time) < duration:
+        current_step = (time.time() - start_time) / duration
+        set_servos(hw_face, ((array * current_step) + (end_pos * (1-current_step))))
+        break
+
+
+    store = array
+    return store
+
+
+def set_servos(hw_face, state):
+    hw_face.set_actuator_postions(state)
+    time.sleep(0.05)
+    return True
 
 def dance(array, frame): 
     # array is the given servo array
@@ -102,6 +119,7 @@ def dance(array, frame):
     servo_cos = (-np.cos((6.28) * frame) + 1) / 2
     store = stand(array, height=servo_cos*255, roll=servo_sin*63)
     return store
+
 
 def main(use_imu=False):
     """Main program
@@ -154,15 +172,14 @@ def main(use_imu=False):
 
             state.joint_angles = store
 
-            hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
+            set_servos(hardware_interface, state.joint_angles)
+
         for i in reversed(range(128)):
             # store = dance(state.joint_angles, i/128)
             store = walk_control(state.joint_angles, 0, 0, i/128)
 
             state.joint_angles = store
 
-            hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
+            set_servos(hardware_interface, state.joint_angles)
 
 main()
