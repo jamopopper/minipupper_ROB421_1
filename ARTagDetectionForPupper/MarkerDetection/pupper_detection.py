@@ -38,9 +38,12 @@ while True:
                 cv.LINE_AA,
             )
             # print(ids, "  ", corners)
-    cv.imshow("frame", frame)
+    """cv.imshow("frame", frame)
     key = cv.waitKey(1)
     if key == ord("q"):
         break
 cap.release()
 cv.destroyAllWindows()
+"""
+#code was throwing an error due to GUI issues
+
