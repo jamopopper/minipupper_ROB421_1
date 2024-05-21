@@ -6,7 +6,7 @@ marker_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
 
 param_markers = aruco.DetectorParameters_create()
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(0, cv.CAP_V4L2) #added  (... , cv.CAP_V4L2)   was giving an error in GStramer pipeline
 
 while True:
     ret, frame = cap.read()
