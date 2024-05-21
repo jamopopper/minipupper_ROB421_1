@@ -201,7 +201,7 @@ def main(use_imu=False):
                 time.sleep(0.05)            
             #recenter the body 
             if i == 3:
-                store = stand(array, 127, 0, 0, 0)
+                store = stand(array, 127, 0, 0, 4)
                 state.joint_angles = store
                 hardware_interface.set_actuator_postions(state.joint_angles)    
                 time.sleep(0.05)     
