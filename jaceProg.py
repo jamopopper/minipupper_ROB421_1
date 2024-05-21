@@ -1,11 +1,11 @@
 import sys
+import jaceCommands as jc
 
 sys.path.append('../StanfordQuadruped')
 
 import numpy as np
 import time
 import os
-import jaceCommands as jc
 from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
