@@ -77,6 +77,10 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
     
     return copy
 
+def sidestep1(array, phase):
+    store = stand(array, 127, 0, 0, 1)
+
+
 def walk0(array, phase):
     servo_sin = np.sin((6.28) * phase)
     servo_cos = (-np.cos((6.28) * phase) + 1) / 2
@@ -145,8 +149,8 @@ def main(use_imu=False):
     time.sleep(1)
     
 
-    while True:
-        for i in reversed(range(128)):
+    '''while True:
+        for i in reversed(range()):
             store = walk0(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
@@ -165,8 +169,42 @@ def main(use_imu=False):
             store = walk3(state.joint_angles, i/128)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
+            time.sleep(0.01)'''
         
+    while True: 
+        for i in range(4):
+            #Bring all legs to standing
+            if i == 0:
+                store = stand(array, 127, 0, 0, 4)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)
+                time.sleep(0.05)     
+            #Move front left and back right leg
+            if i == 1:
+                store = stand(array, 0, 0, -30, 5)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)     
+                time.sleep(0.05)     
+                store = stand(array, 127, 0, -30, 5)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)     
+                time.sleep(0.05)          
+            #Move front right and back left legs          
+            if i == 2:
+                store = stand(array, 0, 0, -30, 6)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)     
+                time.sleep(0.05)      
+                store = stand(array, 127, 0, -30, 6)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)     
+                time.sleep(0.05)            
+            #recenter the body 
+            if i == 3:
+                store = stand(array, 127, 0, 0, 0)
+                state.joint_angles = store
+                hardware_interface.set_actuator_postions(state.joint_angles)    
+                time.sleep(0.05)     
 
 main()
 
