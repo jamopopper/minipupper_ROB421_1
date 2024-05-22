@@ -168,7 +168,7 @@ def circle_right():
             "R2": 0, 
             "ly": 1, 
             "lx": 0, 
-            "rx": 0.1, 
+            "rx": 0.2, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
