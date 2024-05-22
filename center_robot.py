@@ -238,19 +238,19 @@ if __name__ == '__main__':
                 #print(ids, "  ", corners)
                 avg_center = [(top_right[0] + top_left[0])/2, (top_left[1] + bottom_left[1])/2]
                 print(avg_center)
-                if avg_center[0] < 295:
+                if avg_center[0] < 285:
                     turn_left()
                     centered_x = False
-                elif avg_center[0] > 335:
+                elif avg_center[0] > 345:
                     turn_right()
                     centered_x = False
                 else:
                     centered_x = True
                 
-                if avg_center[1] < 215:
+                if avg_center[1] < 245:
                     backward()
                     centered_y = False
-                elif avg_center[1] > 255:
+                elif avg_center[1] > 315:
                     forward()
                     centered_y = False
                 else:
