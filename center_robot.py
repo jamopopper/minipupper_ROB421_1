@@ -191,6 +191,7 @@ if __name__ == '__main__':
     time.sleep(0.2)
     trot()
     time.sleep(0.2)
+    print("starting")
     
     
         
@@ -238,10 +239,10 @@ if __name__ == '__main__':
                 avg_center = [(top_right[0] - top_left[0])/2, (top_left[1] - bottom_left[1])/2]
                 print(avg_center)
                 if avg_center[0] < 295:
-                    turn_right()
+                    turn_left()
                     centered_x = False
                 elif avg_center[0] > 335:
-                    turn_left()
+                    turn_right()
                     centered_x = False
                 else:
                     centered_x = True
