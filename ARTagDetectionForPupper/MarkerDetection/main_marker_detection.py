@@ -13,7 +13,7 @@ param_markers = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(marker_dict, param_markers)
 
 #capture video
-cap = cv.VideoCapture(0) #number indicates what camera you are using. likely 0 by default, 1 or 2 if multiple plugged in
+cap = cv.VideoCapture(1) #number indicates what camera you are using. likely 0 by default, 1 or 2 if multiple plugged in
 
 #create a while loop to capture footage. Ends if "q" is pressed on the keyboard
 while True:
