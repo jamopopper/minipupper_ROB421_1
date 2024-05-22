@@ -183,15 +183,18 @@ if __name__ == '__main__':
     start = time.time()
     end = time.time()
     print("starting")
-    while start - end < 5:
+    print("turning right")
+    while end - start < 5:
         turn_right()
         end = time.time()
     start = time.time()
-    while start - end < 5:
+    print("turning left")
+    while end - start < 5:
         turn_left()
         end = time.time()
     start = time.time()
-    while start - end < 10:
+    print("circling right")
+    while end - start < 10:
         circle_right()
         end = time.time()
     time.sleep(0.2)
