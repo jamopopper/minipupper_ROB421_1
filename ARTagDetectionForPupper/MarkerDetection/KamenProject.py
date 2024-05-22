@@ -1,5 +1,5 @@
 import sys
-
+import NicProject as nic
 sys.path.append('../StanfordQuadruped')
 
 import cv2 as cv
@@ -141,14 +141,6 @@ while True:
                 cv.LINE_AA,
             )
             print(ids, "  ", corners)
-            while True:
-                for i in range(128):
-                    store = walk0(state.joint_angles, i/128)
-                    state.joint_angles = store
-                    hardware_interface.set_actuator_postions(state.joint_angles)
-                    time.sleep(0.01)
-                    store = walk2(state.joint_angles, i/128)
-                    state.joint_angles = store
-                    hardware_interface.set_actuator_postions(state.joint_angles)
+            nic.main()
 
 
