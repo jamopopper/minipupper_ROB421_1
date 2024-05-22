@@ -142,4 +142,6 @@ while True:
                 cv.LINE_AA,
             )
             print(ids, "  ", corners)
-            nic.main()
+                if ids == 18
+                    nic.main()
+                
