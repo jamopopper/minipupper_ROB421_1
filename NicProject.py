@@ -172,7 +172,7 @@ def main(use_imu=False):
     hardware_interface.set_actuator_postions(state.joint_angles)
     time.sleep(1)
     
-    direction = -1
+    direction = 1
 
     while True:
         for i in range(1):
