@@ -170,7 +170,7 @@ def main(use_imu=False):
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(0.01)'''
-        
+      
     while True: 
         for i in range(4):
             #Bring all legs to standing
@@ -204,7 +204,7 @@ def main(use_imu=False):
                 store = stand(array, 127, 0, 0, 4)
                 state.joint_angles = store
                 hardware_interface.set_actuator_postions(state.joint_angles)    
-                time.sleep(0.05)     
+                time.sleep(0.05)    
 
 main()
 
