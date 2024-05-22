@@ -1,5 +1,5 @@
 import sys
-import NicProject as nic
+import NicCode as nic
 sys.path.append('../StanfordQuadruped')
 
 import cv2 as cv
