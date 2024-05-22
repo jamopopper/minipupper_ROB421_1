@@ -236,7 +236,7 @@ if __name__ == '__main__':
                     cv.LINE_AA,
                 )
                 #print(ids, "  ", corners)
-                avg_center = [(top_right[0] - top_left[0])/2, (top_left[1] - bottom_left[1])/2]
+                avg_center = [(top_right[0] + top_left[0])/2, (top_left[1] + bottom_left[1])/2]
                 print(avg_center)
                 if avg_center[0] < 295:
                     turn_left()
