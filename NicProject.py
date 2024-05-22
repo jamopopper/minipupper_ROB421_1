@@ -178,47 +178,56 @@ def main(use_imu=False):
             store = base(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)    
         for i in range(1):
             store = sidestep0_1(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(30):
             store = sidestep0_2(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(1):
             store = sidestep1_1(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(30):
             store = sidestep1_2(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(1):
             store = sidestep2_1(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(30):
             store = sidestep2_2(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(1):
             store = sidestep3_1(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
         for i in range(30):
             store = sidestep3_2(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(.1)
+            time.sleep(.01)
+        time.sleep(.1)   
     
 main()
 
