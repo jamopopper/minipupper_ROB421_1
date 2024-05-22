@@ -175,6 +175,12 @@ def circle_right():
             "dpadx": 0}) 
     
 if __name__ == '__main__':
+    activate()
+    default()
+    time.sleep(0.2)
+    trot()
+    default()
+    time.sleep(0.2)
     start = time.time()
     end = time.time()
     print("starting")
@@ -189,6 +195,14 @@ if __name__ == '__main__':
     while start - end < 10:
         circle_right()
         end = time.time()
+    time.sleep(0.2)
+    trot()
+    default()
+    time.sleep(0.2)
+    activate()
+    default()
+    time.sleep(0.2)
+    print("done")
     
         
         
