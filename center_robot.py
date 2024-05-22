@@ -250,7 +250,7 @@ if __name__ == '__main__':
                 if avg_center[1] < 215:
                     backward()
                     centered_y = False
-                elif avg_center[1] > 2555:
+                elif avg_center[1] > 255:
                     forward()
                     centered_y = False
                 else:
