@@ -24,29 +24,6 @@ from src.danceSample import MovementLib
 from UDPComms import Publisher
 """
 
-def walk0(array, phase):
-    servo_sin = np.sin((6.28) * phase)
-    servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = jc.stand(array, servo_cos*255, 0, 0, 0)
-    return store
-
-def walk2(array, phase):
-    servo_sin = np.sin((6.28) * phase)
-    servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = jc.stand(array, servo_cos*255, 0, 0, 2)
-    return store
-
-def walk1(array, phase):
-    servo_sin = np.sin((6.28) * phase)
-    servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = jc.stand(array, servo_cos*255, 0, 0, 1)
-    return store
-
-def walk3(array, phase):
-    servo_sin = np.sin((6.28) * phase)
-    servo_cos = (-np.cos((6.28) * phase) + 1) / 2
-    store = jc.stand(array, servo_cos*255, 0, 0, 3)
-    return store
 
 ###CAMERA CODE (from pupper_detection.py)
 
