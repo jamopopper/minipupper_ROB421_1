@@ -6,9 +6,11 @@ import cv2 as cv
 from cv2 import aruco
 
 import numpy as np
+
 import time
 import os
 import sys
+"""
 from src.IMU import IMU
 from src.Controller import Controller
 from src.JoystickInterface import JoystickInterface
@@ -20,7 +22,7 @@ from MangDang.mini_pupper.display import Display
 from src.MovementScheme import MovementScheme
 from src.danceSample import MovementLib
 from UDPComms import Publisher
-
+"""
 
 def walk0(array, phase):
     servo_sin = np.sin((6.28) * phase)
@@ -100,7 +102,7 @@ def main(use_imu=False):
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             """
-
+    
 
 ###CAMERA CODE (from pupper_detection.py)
 
