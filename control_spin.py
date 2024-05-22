@@ -138,7 +138,7 @@ def turn_left():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": -0.1, 
+            "rx": -0.15, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
@@ -153,7 +153,7 @@ def turn_right():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": 0.1, 
+            "rx": 0.15, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
@@ -184,12 +184,12 @@ if __name__ == '__main__':
     end = time.time()
     print("starting")
     print("turning right")
-    while end - start < 5:
+    while end - start < 10:
         turn_right()
         end = time.time()
     start = time.time()
     print("turning left")
-    while end - start < 5:
+    while end - start < 10:
         turn_left()
         end = time.time()
     start = time.time()
