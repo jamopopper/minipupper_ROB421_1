@@ -78,15 +78,15 @@ def stand(array, height=127, lean=0, roll=0, leg=4):
     return copy
 
 def base(array):
-    store = stand(array, 127, 0, 0, 4)
+    store = stand(array, 135, 0, 0, 4)
     return store
 
-def sidestep5_1(array):
-    store = stand(array, 0, 0, 0, 5)
+def sidestep5_1(array, phase):
+    store = stand(array, phase, 0, 0, 5)
     return store
 
-def sidestep5_2(array):
-    store = stand(array, 127, 0, 30, 5)
+def sidestep5_2(array, phase):
+    store = stand(array, phase, 0, phase/4.5, 5)
     return store
 
 def main(use_imu=False):
@@ -138,17 +138,17 @@ def main(use_imu=False):
             store = base(state.joint_angles)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
-        for i in range(1):
-            store = sidestep5_1(state.joint_angles)
+            time.sleep(.5)
+        for i in range(135):
+            store = sidestep5_1(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
-        for i in range(1):
-            store = sidestep5_2(state.joint_angles)
+            time.sleep(.5)
+        for i in range(135):
+            store = sidestep5_2(state.joint_angles, i)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
-            time.sleep(0.01)
+            time.sleep(.5)
     
     
 main()
