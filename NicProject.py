@@ -102,7 +102,7 @@ def sidestep2_1(array):
     return store
 
 def sidestep2_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*10, 2)
+    store = stand(array, 40*phase, 0, phase*5, 2)
     return store
 
 def sidestep3_1(array):
@@ -110,7 +110,7 @@ def sidestep3_1(array):
     return store
 
 def sidestep3_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*10, 3)
+    store = stand(array, 40*phase, 0, phase*5, 3)
     return store
 
 def sidestep5_1(array):
@@ -118,7 +118,7 @@ def sidestep5_1(array):
     return store
 
 def sidestep5_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*10, 5)
+    store = stand(array, 40*phase, 0, phase*5, 5)
     return store
 
 def sidestep6_1(array):
@@ -126,7 +126,7 @@ def sidestep6_1(array):
     return store
 
 def sidestep6_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*10, 6)
+    store = stand(array, 40*phase, 0, phase*5, 6)
     return store
 
 def main(use_imu=False):
