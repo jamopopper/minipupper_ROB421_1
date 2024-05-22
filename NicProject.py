@@ -94,7 +94,7 @@ def sidestep6_1(array, phase):
     return store
 
 def sidestep6_2(array, phase):
-    store = stand(array, phase, 0, phase/2.25, 6)
+    store = stand(array, phase, 0, -phase/2.25, 6)
     return store
 
 def main(use_imu=False):
