@@ -173,8 +173,9 @@ def main(use_imu=False):
     time.sleep(1)
     
     direction = -1
-
-    while True:
+    start = time.time()
+    end = time.time()
+    while end - start < 10:
         for i in range(1):
             store = base(state.joint_angles)
             state.joint_angles = store
@@ -229,6 +230,67 @@ def main(use_imu=False):
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(.01)
         #time.sleep(.1)   
+        end = time.time()
+
+    direction = 1
+    start = time.time()
+    end = time.time()
+    while end - start < 10:
+        for i in range(1):
+            store = base(state.joint_angles)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)    
+        for i in range(1):
+            store = sidestep0_1(state.joint_angles)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(3):
+            store = sidestep0_2(state.joint_angles, i, direction)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(1):
+            store = sidestep1_1(state.joint_angles)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(3):
+            store = sidestep1_2(state.joint_angles, i, direction)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(1):
+            store = sidestep2_1(state.joint_angles)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(3):
+            store = sidestep2_2(state.joint_angles, i, direction)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(1):
+            store = sidestep3_1(state.joint_angles)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        for i in range(3):
+            store = sidestep3_2(state.joint_angles, i, direction)
+            state.joint_angles = store
+            hardware_interface.set_actuator_postions(state.joint_angles)
+            time.sleep(.01)
+        #time.sleep(.1)   
+        end = time.time()
     
 main()
 
