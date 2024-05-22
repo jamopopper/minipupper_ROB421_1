@@ -85,40 +85,40 @@ def sidestep0_1(array):
     store = stand(array, 0, 0, 0, 0)
     return store
 
-def sidestep0_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*20, 0)
+def sidestep0_2(array, phase, l_r):
+    store = stand(array, 40*phase, 0, l_r*phase*20, 0)
     return store
 
 def sidestep1_1(array):
     store = stand(array, 0, 0, 0, 1)
     return store
 
-def sidestep1_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*20, 1)
+def sidestep1_2(array, phase, l_r):
+    store = stand(array, 40*phase, 0, l_r*phase*20, 1)
     return store
 
 def sidestep2_1(array):
     store = stand(array, 0, 0, 0, 2)
     return store
 
-def sidestep2_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*5, 2)
+def sidestep2_2(array, phase, l_r):
+    store = stand(array, 40*phase, 0, l_r*phase*5, 2)
     return store
 
 def sidestep3_1(array):
     store = stand(array, 0, 0, 0, 3)
     return store
 
-def sidestep3_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*5, 3)
+def sidestep3_2(array, phase, l_r):
+    store = stand(array, 40*phase, 0, l_r*phase*5, 3)
     return store
 
 def sidestep5_1(array):
     store = stand(array, 0, 0, 0, 5)
     return store
 
-def sidestep5_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*5, 5)
+def sidestep5_2(array, phase, l_r):
+    store = stand(array, 40*phase, 0, l_r*phase*5, 5)
     return store
 
 def sidestep6_1(array):
@@ -126,7 +126,7 @@ def sidestep6_1(array):
     return store
 
 def sidestep6_2(array, phase):
-    store = stand(array, 40*phase, 0, phase*5, 6)
+    store = stand(array, 40*phase, 0, l_r*phase*5, 6)
     return store
 
 def main(use_imu=False):
@@ -172,6 +172,7 @@ def main(use_imu=False):
     hardware_interface.set_actuator_postions(state.joint_angles)
     time.sleep(1)
     
+    direction = -1
 
     while True:
         for i in range(1):
@@ -187,7 +188,7 @@ def main(use_imu=False):
             time.sleep(.01)
         #time.sleep(.1)   
         for i in range(3):
-            store = sidestep0_2(state.joint_angles, i)
+            store = sidestep0_2(state.joint_angles, i, direction)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(.01)
@@ -199,7 +200,7 @@ def main(use_imu=False):
             time.sleep(.01)
         #time.sleep(.1)   
         for i in range(3):
-            store = sidestep1_2(state.joint_angles, i)
+            store = sidestep1_2(state.joint_angles, i, direction)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(.01)
@@ -211,7 +212,7 @@ def main(use_imu=False):
             time.sleep(.01)
         #time.sleep(.1)   
         for i in range(3):
-            store = sidestep2_2(state.joint_angles, i)
+            store = sidestep2_2(state.joint_angles, i, direction)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(.01)
@@ -223,7 +224,7 @@ def main(use_imu=False):
             time.sleep(.01)
         #time.sleep(.1)   
         for i in range(3):
-            store = sidestep3_2(state.joint_angles, i)
+            store = sidestep3_2(state.joint_angles, i, direction)
             state.joint_angles = store
             hardware_interface.set_actuator_postions(state.joint_angles)
             time.sleep(.01)
