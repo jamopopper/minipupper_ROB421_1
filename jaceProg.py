@@ -64,10 +64,10 @@ def main(use_imu=False):
     
 
     while True:
-        for i in range(128):
-            store = jc.dance(state.joint_angles, i/128)
-            state.joint_angles = store
-            jc.set_servos(hardware_interface, state.joint_angles)
+        # for i in range(128):
+        #     store = jc.dance(state.joint_angles, i/128)
+        #     state.joint_angles = store
+        #     jc.set_servos(hardware_interface, state.joint_angles)
 
         # start low
         store = jc.stand(state.joint_angles, 0)
