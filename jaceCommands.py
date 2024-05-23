@@ -87,6 +87,7 @@ def keyframe(array, duration, end_pos, hw_face):
         current_step = (time.time() - start_time) / duration
         print(current_step)
         store = np.add(np.multiply(array, current_step), np.multiply(end_pos, 1-current_step))
+        print(store)
         set_servos(hw_face, store)
 
 
