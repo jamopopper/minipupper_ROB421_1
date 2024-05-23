@@ -86,7 +86,8 @@ def keyframe(array, duration, end_pos, hw_face):
     #while (time.time() - start_time) < duration:
         current_step = (time.time() - start_time) / duration
         print(current_step)
-        set_servos(hw_face, ((array * current_step) + (end_pos * (1-current_step))))
+        store = ((array * current_step) + (end_pos * (1-current_step)))
+        set_servos(hw_face, store)
 
 
     store = array
