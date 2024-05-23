@@ -148,7 +148,7 @@ def turn_left():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": -0.15, 
+            "rx": -0.2, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
@@ -163,7 +163,7 @@ def turn_right():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": 0.15, 
+            "rx": 0.2, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
@@ -257,9 +257,17 @@ if __name__ == '__main__':
                     centered_y = True
                 
                 if (centered_y and centered_x):
+                    print("centered1")
+                    break
+        else:
+            turn_left()
+            
+
+        if (centered_y and centered_x):
+                    print("centered2")
                     break
 
-    print("centered")                
+    print("centered3")                
     default()
     time.sleep(0.2)
     trot()
