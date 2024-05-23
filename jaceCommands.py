@@ -98,6 +98,7 @@ def keyframe(array, duration, end_pos, hw_face):
 def set_servos(hw_face, state):
     hw_face.set_actuator_postions(state)
     time.sleep(0.05)
+    print("setted")
     return True
 
 def dance(array, frame): 
