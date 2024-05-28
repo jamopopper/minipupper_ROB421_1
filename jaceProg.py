@@ -69,13 +69,15 @@ def main(use_imu=False):
         store1 = jc.stand(0)
         state.joint_angles = store1
         jc.set_servos(hardware_interface, state.joint_angles)
+        print("low!")
 
         # slowly stand up
-        store2 = jc.stand()
+        store2 = jc.stand(255)
         jc.keyframe(2, store1, store2, hardware_interface)
 
         # go to stand assuming it isn't there already
         state.joint_angles = store2
+        print("high!")
         jc.set_servos(hardware_interface, state.joint_angles)
 
         # for i in range(128):
