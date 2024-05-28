@@ -114,6 +114,7 @@ if __name__ == "__main__":
     time.sleep(0.2)
     while True:
         look_right()
+        print("looking right")
     time.sleep(10)
     activate()
     
