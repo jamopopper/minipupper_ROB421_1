@@ -183,10 +183,74 @@ def circle_right():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0}) 
-    
+
+def look_up():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0.2, 
+            "dpady": 0, 
+            "dpadx": 0})
+
+def look_down():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": -0.2, 
+            "dpady": 0, 
+            "dpadx": 0})
+
+def look_right():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0.2, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
+def look_left():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": -0.2, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
 if __name__ == '__main__':
     centered_x = False
     centered_y = False
+    true_x = False
+    true_y = False
     activate()
     time.sleep(0.2)
     trot()
@@ -257,13 +321,33 @@ if __name__ == '__main__':
                     centered_y = True
                 
                 if (centered_y and centered_x):
-                    print("centered1")
-                    break
+                    print("first center")
+                    if avg_center[0] < 305:
+                        look_left()
+                        true_x = False
+                    elif avg_center[0] > 325:
+                        look_right()
+                        true_x = False
+                    else:
+                        true_x = True
+                    
+                    if avg_center[1] < 225:
+                        look_down()
+                        true_y = False
+                    elif avg_center[1] > 245:
+                        look_up()
+                        true_y = False
+                    else:
+                        true_y = True
+                        
+                    if (true_x and true_y):
+                        print("true centered")
+                        break
         else:
             turn_left()
             
 
-        if (centered_y and centered_x):
+        if (true_x and true_y):
                     print("centered2")
                     break
 
