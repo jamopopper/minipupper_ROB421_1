@@ -311,10 +311,10 @@ if __name__ == '__main__':
                 else:
                     centered_x = True
                 
-                if avg_center[1] < 245:
+                if avg_center[1] < 0:
                     backward()
                     centered_y = False
-                elif avg_center[1] > 315:
+                elif avg_center[1] > 500:
                     forward()
                     centered_y = False
                 else:
