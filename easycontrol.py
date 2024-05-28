@@ -81,7 +81,6 @@ def look_right():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})  
-def look_left():
     
 
 # TODO: create functions that allow the robot to move around (forward,back,right,left,....)
