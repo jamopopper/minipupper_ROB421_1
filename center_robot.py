@@ -306,8 +306,10 @@ if __name__ == '__main__':
                 if first_center:
                     if avg_center[0] < 285:
                         turn_left()
+                        print("left")
                         centered_x = False
                     elif avg_center[0] > 345:
+                        print("right")
                         turn_right()
                         centered_x = False
                     else:
