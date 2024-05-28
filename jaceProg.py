@@ -65,35 +65,18 @@ def main(use_imu=False):
 
     while True:
 
-        # start low
-        store1 = jc.stand(0)
-        state.joint_angles = store1
-        jc.set_servos(hardware_interface, state.joint_angles)
-        print("low!")
+        for i in range(255):
+            store1 = jc.walk_control(0, 0, (i/255))
+            state.joint_angles = store1
+            jc.set_servos(hardware_interface, state.joint_angles)
+            print(i + " frame")
+        
+        for i in reversed(range(255)):
+            store1 = jc.walk_control(0, 0, (i/255))
+            state.joint_angles = store1
+            jc.set_servos(hardware_interface, state.joint_angles)
+            print(i + " frame")
+        
 
-        # slowly stand up
-        store2 = jc.stand(255)
-        jc.keyframe(2, store1, store2, hardware_interface)
-
-        # go to stand assuming it isn't there already
-        state.joint_angles = store2
-        print("high!")
-        jc.set_servos(hardware_interface, state.joint_angles)
-
-        # for i in range(128):
-        #     # store = dance(state.joint_angles, i/128)
-        #     store = walk_control(state.joint_angles, 0, 0, i/128)
-
-        #     state.joint_angles = store
-
-        #     set_servos(hardware_interface, state.joint_angles)
-
-        # for i in reversed(range(128)):
-        #     # store = dance(state.joint_angles, i/128)
-        #     store = walk_control(state.joint_angles, 0, 0, i/128)
-
-        #     state.joint_angles = store
-
-        #     set_servos(hardware_interface, state.joint_angles)
 
 main()

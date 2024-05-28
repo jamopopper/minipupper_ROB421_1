@@ -6,6 +6,27 @@ import numpy as np
 import time
 
 
+def set_servos(hw_face, state):
+    hw_face.set_actuator_postions(state)
+    time.sleep(0.05)
+    return True
+
+def keyframe(duration, start_pos, end_pos, hw_face):
+    start_time = time.time()
+    array = np.zeros((3,4))
+    while (start_time + duration) > time.time():
+    #while (time.time() - start_time) < duration:
+        current_step = (time.time() - start_time) / duration
+        print(current_step)
+        for i in range(3):
+            for j in range(4):
+                array[i, j] = (start_pos[i, j] * (1-current_step)) + (end_pos[i, j] * current_step)
+        print(array)
+        set_servos(hw_face, array)
+
+
+    return array
+
 def stand(height=127, lean=0, roll=0, leg=4): 
     # array is the given servo array
     # height (default=127) goes from 0-255
@@ -55,7 +76,6 @@ def stand(height=127, lean=0, roll=0, leg=4):
     
     return array
 
-
 def walk_control(direction, lead_set, frame):
     # array is the given servo array
     # direction is the direction you want to step toward and goes from 0-1
@@ -69,38 +89,15 @@ def walk_control(direction, lead_set, frame):
     array = np.zeros((3,4))
 
     if lead_set == 0:
-        array = stand(array, 127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-        array = stand(array, 127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array = stand(127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array = stand(127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
         array = array
     else:
-        array = stand(array, 127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-        array = stand(array, 127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array = stand(127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array = stand(127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
         array = array
 
     return array
-
-
-def keyframe(duration, start_pos, end_pos, hw_face):
-    start_time = time.time()
-    array = np.zeros((3,4))
-    while (start_time + duration) > time.time():
-    #while (time.time() - start_time) < duration:
-        current_step = (time.time() - start_time) / duration
-        print(current_step)
-        for i in range(3):
-            for j in range(4):
-                array[i, j] = (end_pos[i, j] * current_step) + (start_pos[i, j] * (1-current_step))
-        print(array)
-        set_servos(hw_face, array)
-
-
-    return array
-
-
-def set_servos(hw_face, state):
-    hw_face.set_actuator_postions(state)
-    time.sleep(0.05)
-    return True
 
 def dance(frame): 
     # frame goes from 0-1
@@ -112,4 +109,9 @@ def dance(frame):
     servo_cos = (-np.cos((6.28) * frame) + 1) / 2
     array = stand(height=servo_cos*255, roll=servo_sin*63)
     return array
+
+
+
+
+
 
