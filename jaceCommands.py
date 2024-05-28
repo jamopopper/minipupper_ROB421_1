@@ -82,10 +82,16 @@ def walk_control(array, direction, lead_set, frame):
 
 def keyframe(array, duration, end_pos, hw_face):
     start_time = time.time()
-    while (time.time() - start_time) < duration:
+    store = np.zeros((3,4))
+    while (start_time + duration) > time.time():
+    #while (time.time() - start_time) < duration:
         current_step = (time.time() - start_time) / duration
-        set_servos(hw_face, ((array * current_step) + (end_pos * (1-current_step))))
-        break
+        print(current_step)
+        for i in range(3):
+            for j in range(4):
+                store[i, j] = (array[i, j] * current_step) + (end_pos[i, j] * (1-current_step))
+        print(store)
+        set_servos(hw_face, store)
 
 
     store = array
