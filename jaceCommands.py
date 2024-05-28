@@ -89,12 +89,12 @@ def walk_control(direction, lead_set, frame):
     array = np.zeros((3,4))
 
     if lead_set == 0:
-        array = stand(127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-        array = stand(127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
         array = array
     else:
-        array = stand(127 - (np.sin(3.14*frame)), np.sin(6.28 * direction) * 2*(frame-0.5) * 64, np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-        array = stand(127, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
         array = array
 
     return array
