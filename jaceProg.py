@@ -57,30 +57,25 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    store = jc.stand(state.joint_angles)
+    store = jc.stand()
     state.joint_angles = store
     jc.set_servos(hardware_interface, state.joint_angles)
     time.sleep(1)
     
 
     while True:
-        # for i in range(128):
-        #     store = jc.dance(state.joint_angles, i/128)
-        #     state.joint_angles = store
-        #     jc.set_servos(hardware_interface, state.joint_angles)
 
         # start low
-        store = jc.stand(state.joint_angles, 0)
-        state.joint_angles = store
+        store1 = jc.stand(0)
+        state.joint_angles = store1
         jc.set_servos(hardware_interface, state.joint_angles)
 
         # slowly stand up
-        store = jc.stand(state.joint_angles)
-        jc.keyframe(state.joint_angles, 2, store, hardware_interface)
+        store2 = jc.stand()
+        jc.keyframe(2, store1, store2, hardware_interface)
 
         # go to stand assuming it isn't there already
-        store = jc.stand(state.joint_angles)
-        state.joint_angles = store
+        state.joint_angles = store2
         jc.set_servos(hardware_interface, state.joint_angles)
 
         # for i in range(128):
