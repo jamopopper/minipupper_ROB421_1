@@ -57,7 +57,7 @@ def main(use_imu=False):
     print("x shift: ", config.x_shift)
 
 
-    store = jc.stand(state.joint_angles)
+    store = jc.stand()
     state.joint_angles = store
     jc.set_servos(hardware_interface, state.joint_angles)
     time.sleep(1)
