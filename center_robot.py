@@ -251,6 +251,7 @@ if __name__ == '__main__':
     centered_y = False
     true_x = False
     true_y = False
+    first_center = True
     activate()
     time.sleep(0.2)
     trot()
@@ -302,26 +303,32 @@ if __name__ == '__main__':
                 #print(ids, "  ", corners)
                 avg_center = [(top_right[0] + top_left[0])/2, (top_left[1] + bottom_left[1])/2]
                 print(avg_center)
-                if avg_center[0] < 285:
-                    turn_left()
-                    centered_x = False
-                elif avg_center[0] > 345:
-                    turn_right()
-                    centered_x = False
+                if first_center:
+                    if avg_center[0] < 285:
+                        turn_left()
+                        centered_x = False
+                    elif avg_center[0] > 345:
+                        turn_right()
+                        centered_x = False
+                    else:
+                        centered_x = True
+                    
+                    if avg_center[1] < 0:
+                        backward()
+                        centered_y = False
+                    elif avg_center[1] > 500:
+                        forward()
+                        centered_y = False
+                    else:
+                        centered_y = True
+                    
+                    if (centered_y and centered_x):
+                        trot()
+                        time.sleep(0.2)
+                        default()
+                        print("first center")
+                        first_center = False
                 else:
-                    centered_x = True
-                
-                if avg_center[1] < 0:
-                    backward()
-                    centered_y = False
-                elif avg_center[1] > 500:
-                    forward()
-                    centered_y = False
-                else:
-                    centered_y = True
-                
-                if (centered_y and centered_x):
-                    print("first center")
                     if avg_center[0] < 305:
                         look_left()
                         true_x = False
