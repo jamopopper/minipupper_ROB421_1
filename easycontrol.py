@@ -66,6 +66,22 @@ def forward():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})  
+def look_right():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0.4, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})  
+def look_left():
     
 
 # TODO: create functions that allow the robot to move around (forward,back,right,left,....)
@@ -76,10 +92,8 @@ def forward():
 if __name__ == "__main__":
     activate()
     time.sleep(1)
-    trot()
-    time.sleep(1)
     while True:
-        forward()
+        look_right()
     time.sleep(10)
     activate()
     
