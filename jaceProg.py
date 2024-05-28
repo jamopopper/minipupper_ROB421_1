@@ -69,13 +69,13 @@ def main(use_imu=False):
             store1 = jc.walk_control(0, 0, (i/255))
             state.joint_angles = store1
             jc.set_servos(hardware_interface, state.joint_angles)
-            print(i + " frame")
+            print(i)
         
         for i in reversed(range(255)):
             store1 = jc.walk_control(0, 0, (i/255))
             state.joint_angles = store1
             jc.set_servos(hardware_interface, state.joint_angles)
-            print(i + " frame")
+            print(i)
         
 
 
