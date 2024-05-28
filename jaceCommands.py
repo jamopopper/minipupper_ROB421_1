@@ -89,7 +89,7 @@ def keyframe(duration, start_pos, end_pos, hw_face):
         print(current_step)
         for i in range(3):
             for j in range(4):
-                array[i, j] = (start_pos[i, j] * current_step) + (end_pos[i, j] * (1-current_step))
+                array[i, j] = (end_pos[i, j] * current_step) + (start_pos[i, j] * (1-current_step))
         print(array)
         set_servos(hw_face, array)
 
