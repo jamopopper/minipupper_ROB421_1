@@ -59,22 +59,22 @@ def stand(height=127, lean=0, roll=0, leg=4):
     array = np.zeros((3,4))
 
     if leg == 8:
-        stand(height, lean, roll, 2)
-        stand(height, lean, roll, 3)
+        array += stand(height, lean, roll, 2)
+        array += stand(height, lean, roll, 3)
     elif leg == 7:
-        stand(height, lean, roll, 0)
-        stand(height, lean, roll, 1)
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 1)
     elif leg == 6:
-        stand(height, lean, roll, 1)
-        stand(height, lean, roll, 2)
+        array += stand(height, lean, roll, 1)
+        array += stand(height, lean, roll, 2)
     elif leg == 5:
-        stand(height, lean, roll, 0)
-        stand(height, lean, roll, 3)
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 3)
     elif leg == 4:
-        stand(height, lean, roll, 0)
-        stand(height, lean, roll, 1)
-        stand(height, lean, roll, 2)
-        stand(height, lean, roll, 3)
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 1)
+        array += stand(height, lean, roll, 2)
+        array += stand(height, lean, roll, 3)
     else:
         side = -1
         if leg == 0 or leg == 2: side = 1
