@@ -30,7 +30,13 @@ def keyframe(duration, start_pos, end_pos, hw_face):
 def look_right(height=127):
     store = np.zeros((3,4))
     store = stand(height, 0, 63, 7)
-    store = stand(height, 0, -63, 8)
+    # store = stand(height, 0, -63, 8)
+    return store
+
+def look_left(height=127):
+    store = np.zeros((3,4))
+    store = stand(height, 0, -63, 7)
+    # store = stand(height, 0, -63, 8)
     return store
 
 
@@ -90,18 +96,23 @@ def walk_control(direction, lead_set, frame):
     # lead_set is the set of feet that are leading the step
     # frame is how far you are through the step and goes from 0-1
 
-    # direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
+    #DEPRICATED# direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
+    # direction 0 is forward, 1 is right, 2 is left, 3 is backward
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
     array = np.zeros((3,4))
 
-    if lead_set == 0:
-        array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-        array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-    else:
-        array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-        array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+
+
+    ### PERFECT GAIT BUT IM GIVING UP ON IT
+
+    # if lead_set == 0:
+    #     array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+    #     array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+    # else:
+    #     array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+    #     array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
 
     return array
 
