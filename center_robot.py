@@ -325,11 +325,11 @@ if __name__ == '__main__':
                         centered_y = True
                     
                     if (centered_y and centered_x):
+                        first_center = False
                         trot()
                         time.sleep(0.2)
                         default()
                         print("first center")
-                        first_center = False
                 else:
                     if avg_center[0] < 305:
                         look_left()
