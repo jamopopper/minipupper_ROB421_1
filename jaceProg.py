@@ -66,12 +66,11 @@ def main(use_imu=False):
     while True:
 
         store1 = jc.look_left(127)
-        store2 = state.joint_angles
+        store2 = jc.look_right(127)
         jc.keyframe(2, store2, store1, hardware_interface)
 
         store1 = jc.look_left(127)
         store2 = jc.look_right(127)
-        state.joints = store2
         jc.keyframe(2, store1, store2, hardware_interface)
 
         
