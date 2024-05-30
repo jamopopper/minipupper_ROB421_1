@@ -105,6 +105,10 @@ def walk_control(direction, lead_set, frame):
         array1 = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
         array2 = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
 
+    print("INSIDE WALK")
+    print(array1)
+    print(array2)
+    print("END WALK")
     return (array1 + array2)
 
 def dance(frame): 
