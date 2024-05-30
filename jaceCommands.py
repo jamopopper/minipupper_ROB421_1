@@ -27,6 +27,13 @@ def keyframe(duration, start_pos, end_pos, hw_face):
 
     return array
 
+def look_right(height=127):
+    store = np.zeros((3,4))
+    store = stand(height, 0, 63, 7)
+    store = stand(height, 0, -63, 8)
+    return store
+
+
 def stand(height=127, lean=0, roll=0, leg=4): 
     # array is the given servo array
     # height (default=127) goes from 0-255
@@ -39,6 +46,7 @@ def stand(height=127, lean=0, roll=0, leg=4):
     # lower joints (2) go from -0.1 to -0.728
     # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left
     # leg 4 is all legs, 5 is front-left and back-right, 6 is front-right and back-left
+    # leg 7 is front legs, leg 8 is back legs
 
     array = np.zeros((3,4))
 
@@ -91,11 +99,9 @@ def walk_control(direction, lead_set, frame):
     if lead_set == 0:
         array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
         array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-        array = array
     else:
         array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
         array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-        array = array
 
     return array
 
