@@ -95,15 +95,18 @@ def walk_control(direction, lead_set, frame):
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
+    local_pi = 3.14
+    local_pi_double = local_pi * 2
+
     array1 = np.zeros((3,4))
     array2 = np.zeros((3,4))
 
     if lead_set == 0:
-        array1 = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-        array2 = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+        array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
+        array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
     else:
-        array1 = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-        array2 = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+        array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
+        array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
 
     return (array1 + array2)
 
