@@ -71,6 +71,7 @@ def main(use_imu=False):
 
         store1 = jc.look_left(127)
         store2 = jc.look_right(127)
+        state.joints = store2
         jc.keyframe(2, store1, store2, hardware_interface)
 
         
