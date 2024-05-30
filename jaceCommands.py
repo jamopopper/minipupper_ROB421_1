@@ -28,16 +28,14 @@ def keyframe(duration, start_pos, end_pos, hw_face):
     return array
 
 def look_right(height=127):
-    store = np.zeros((3,4))
-    store = stand(height, 0, 63, 7)
-    store = stand(height, 0, -63, 8)
-    return store
+    store1 = stand(height, 0, 63, 7)
+    store2 = stand(height, 0, -63, 8)
+    return (store1 + store2)
 
 def look_left(height=127):
-    store = np.zeros((3,4))
-    store = stand(height, 0, -63, 7)
-    store = stand(height, 0, -63, 8)
-    return store
+    store1 = stand(height, 0, 63, 8)
+    store2 = stand(height, 0, -63, 7)
+    return (store1 + store2)
 
 
 def stand(height=127, lean=0, roll=0, leg=4): 
