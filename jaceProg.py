@@ -65,27 +65,30 @@ def main(use_imu=False):
 
     while True:
 
-        store1 = jc.look_left(127)
-        store2 = jc.look_right(127)
-        jc.keyframe(2, store2, store1, hardware_interface)
+        ## Look left then right repeatedly
+        # store1 = jc.look_left(127)
+        # store2 = jc.look_right(127)
+        # jc.keyframe(2, store2, store1, hardware_interface)
 
-        store1 = jc.look_left(127)
-        store2 = jc.look_right(127)
-        jc.keyframe(2, store1, store2, hardware_interface)
+        # store1 = jc.look_left(127)
+        # store2 = jc.look_right(127)
+        # jc.keyframe(2, store1, store2, hardware_interface)
 
         
+        ## Go thought range of walk stepping
+        for i in range(128):
+            store1 = jc.walk_control(0, 0, (i/128))
+            state.joint_angles = store1
+            jc.set_servos(hardware_interface, state.joint_angles)
+            print(i)
+            print(state.joint_angles)
+        for i in reversed(range(128)):
+            store1 = jc.walk_control(0, 0, (i/128))
+            state.joint_angles = store1
+            jc.set_servos(hardware_interface, state.joint_angles)
+            print(i)
+            print(state.joint_angles)
 
-        # for i in range(128):
-        #     store1 = jc.walk_control(0, 0, (i/128))
-        #     state.joint_angles = store1
-        #     jc.set_servos(hardware_interface, state.joint_angles)
-        #     print(i)
-        
-        # for i in reversed(range(128)):
-        #     store1 = jc.walk_control(0, 0, (i/128))
-        #     state.joint_angles = store1
-        #     jc.set_servos(hardware_interface, state.joint_angles)
-        #     print(i)
         
 
 
