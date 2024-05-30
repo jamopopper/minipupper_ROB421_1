@@ -333,18 +333,22 @@ if __name__ == '__main__':
                 else:
                     if avg_center[0] < 305:
                         look_left()
+                        print("look left")
                         true_x = False
                     elif avg_center[0] > 325:
+                        print("look right")
                         look_right()
                         true_x = False
                     else:
                         true_x = True
                     
                     if avg_center[1] < 225:
-                        look_down()
+                        look_up()
+                        print("look up")
                         true_y = False
                     elif avg_center[1] > 245:
-                        look_up()
+                        look_down()
+                        print("look down")
                         true_y = False
                     else:
                         true_y = True
