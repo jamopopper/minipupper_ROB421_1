@@ -107,25 +107,25 @@ def walk_control(direction, distance, steps, hw_face):
     mid_inv_step = stand(127, 0, 0, 6)
     mid_inv_step += stand(63, 0, 0, 5)
 
-    set_servos(hw_face, stationary_step)
-    time.sleep(0.2)
-    set_servos(hw_face, mid_step)
-    time.sleep(0.2)
+    
+    keyframe(0.2, stationary_step, mid_step, hw_face)
 
     for i in range(steps):
         print(i)
         for j in range(4):
             if (j == 0):
-                set_servos(hw_face, full_step)
+                keyframe(0.2, mid_step, full_step, hw_face)
             elif (j == 1):
-                set_servos(hw_face, mid_inv_step)
+                keyframe(0.2, full_step, mid_inv_step, hw_face)
             elif (j == 2):
-                set_servos(hw_face, full_inv_step)
+                keyframe(0.2, mid_inv_step, full_inv_step, hw_face)
             elif (j == 3):
-                set_servos(hw_face, mid_step)
+                keyframe(0.2, full_inv_step, mid_step, hw_face)
             else:
                 time.sleep(1)
             time.sleep(0.2)
+
+    keyframe(0.2, mid_step, stationary_step, hw_face)
 
     ### DEPRICATED ###
     # local_pi = 3.14
