@@ -27,15 +27,33 @@ def keyframe(duration, start_pos, end_pos, hw_face):
 
     return array
 
-def look_right(height=127):
-    store1 = stand(height, 0, 63, 7)
-    store2 = stand(height, 0, -63, 8)
+def look_around(height=127, offset=0):
+    # positive looks right, negative looks left
+    # 0-63
+    store1 = stand(height, 0, offset * 63, 7)
+    store2 = stand(height, 0, offset * -63, 8)
     return (store1 + store2)
 
-def look_left(height=127):
-    store1 = stand(height, 0, 63, 8)
-    store2 = stand(height, 0, -63, 7)
-    return (store1 + store2)
+def turn_around(height, offset, hw_face):
+
+    store1a = stand(height, 0, offset * 63, 0) # front right
+    store1b = stand(height, 0, offset * 63, 1) # front left
+
+    store2a = stand(height, 0, offset * -63, 2) # back right
+    store2b = stand(height, 0, offset * -63, 3) # back left
+
+    leg_up_1 = stand(63, leg=5) # front left and back right
+    leg_up_2 = stand(63, leg=6) # front right and back left
+
+    leg_set_1 = stand(127, leg=5) # front left and back right
+    leg_set_2 = stand(127, leg=6) # front right and back left
+
+    set_servos((store1a + store1b + store2a + store2b), hw_face)
+    keyframe(0.1, (store1a + store1b + store2a + store2b), (leg_up_1 + store1a + store2b), hw_face)
+    keyframe(0.1, (leg_up_1 + store1a + store2b), (leg_set_1 + store1a + store2b), hw_face)
+    keyframe(0.1, (leg_set_1 + store1a + store2b), (leg_set_1 + leg_up_2), hw_face)
+    keyframe(0.1, (leg_set_1 + leg_up_2), (leg_set_1 + leg_set_2), hw_face)
+
 
 
 def stand(height=127, lean=0, roll=0, leg=4): 
