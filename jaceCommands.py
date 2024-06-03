@@ -84,31 +84,38 @@ def stand(height=127, lean=0, roll=0, leg=4):
 
     return array
 
-def walk_control(direction, lead_set, frame):
-    # array is the given servo array
+def walk_control(direction, distance, steps):
     # direction is the direction you want to step toward and goes from 0-1
-    # lead_set is the set of feet that are leading the step
-    # frame is how far you are through the step and goes from 0-1
+    # distance is how far the steps should be
 
-    # direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
+    #DEPREICATED# direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
     # direction 0 is forward, 1 is right, 2 is left, 3 is backward
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
-    local_pi = 3.14
-    local_pi_double = local_pi * 2
+    array = np.zeros((3,4))
+    
 
-    array1 = np.zeros((3,4))
-    array2 = np.zeros((3,4))
+    for i in range(steps):
+        for j in range(4):
 
-    if lead_set == 0:
-        array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
-        array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
-    else:
-        array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
-        array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
+            time.sleep(0.2)
 
-    return (array1 + array2)
+    ### DEPRICATED ###
+    # local_pi = 3.14
+    # local_pi_double = local_pi * 2
+
+    # array1 = np.zeros((3,4))
+    # array2 = np.zeros((3,4))
+
+    # if lead_set == 0:
+    #     array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
+    #     array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
+    # else:
+    #     array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
+    #     array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
+
+    # return (array1 + array2)
 
 def dance(frame): 
     # frame goes from 0-1
