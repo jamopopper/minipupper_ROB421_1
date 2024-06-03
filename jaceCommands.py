@@ -84,7 +84,7 @@ def stand(height=127, lean=0, roll=0, leg=4):
 
     return array
 
-def walk_control(direction, distance, steps):
+def walk_control(direction, distance, steps, hw_face):
     # direction is the direction you want to step toward and goes from 0-1
     # distance is how far the steps should be
 
@@ -93,12 +93,38 @@ def walk_control(direction, distance, steps):
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
-    array = np.zeros((3,4))
-    
+    stationary_step = stand(127, 0, 0, 4)
+
+    full_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5)
+    full_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6)
+
+    full_inv_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6)
+    full_inv_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5)
+
+    mid_step = stand(127, 0, 0, 5)
+    mid_step += stand(63, 0, 0, 6)
+
+    mid_inv_step = stand(127, 0, 0, 6)
+    mid_inv_step += stand(63, 0, 0, 5)
+
+    set_servos(hw_face, stationary_step)
+    time.sleep(0.2)
+    set_servos(hw_face, mid_step)
+    time.sleep(0.2)
 
     for i in range(steps):
+        print(i)
         for j in range(4):
-
+            if (j == 0):
+                set_servos(hw_face, full_step)
+            elif (j == 1):
+                set_servos(hw_face, mid_inv_step)
+            elif (j == 2):
+                set_servos(hw_face, full_inv_step)
+            elif (j == 3):
+                set_servos(hw_face, mid_step)
+            else:
+                time.sleep(1)
             time.sleep(0.2)
 
     ### DEPRICATED ###
