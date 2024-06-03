@@ -349,8 +349,8 @@ if __name__ == '__main__':
                     start = time.time()
                     end = time.time()
                     while end - start < 5:
-                        x_p = (avg_center[0] - 315) / 250
-                        y_p = (avg_center[1] - 235) / 170
+                        x_p = (avg_center[0] - 315) / 310
+                        y_p = -((avg_center[1] - 235) / 230)
                         look_pos(x_p, y_p)
                         end = time.time()
                     break
