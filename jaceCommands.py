@@ -123,6 +123,7 @@ def walk_control(direction, distance, steps, hw_face):
                 keyframe(0.2, full_inv_step, mid_step, hw_face)
             else:
                 time.sleep(1)
+                print("bad times ahead!")
             time.sleep(0.2)
 
     keyframe(0.2, mid_step, stationary_step, hw_face)
