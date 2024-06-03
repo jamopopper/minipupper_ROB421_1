@@ -264,6 +264,7 @@ def look_pos(x_pos, y_pos):
 if __name__ == '__main__':
     centered_x = False
     centered_y = False
+    done = False
     true_x = False
     true_y = False
     first_center = True
@@ -350,9 +351,10 @@ if __name__ == '__main__':
                     end = time.time()
                     while end - start < 5:
                         x_p = (avg_center[0] - 315) / 310
-                        y_p = -((avg_center[1] - 235) / 230)
+                        y_p = -((avg_center[1] - 235) / 100)
                         look_pos(x_p, y_p)
                         end = time.time()
+                    done = True
                     break
                         
                     if avg_center[0] < 305:
@@ -380,20 +382,18 @@ if __name__ == '__main__':
                     if (true_x and true_y):
                         print("true centered")
                         break
+            if done:
+                break
                         
         else:
             turn_left()
             
 
-        if (true_x and true_y):
-                    print("centered2")
-                    break
+        if done:
+            print("centered2")
+            break
 
     print("centered3")                
-    default()
-    time.sleep(0.2)
-    trot()
-    time.sleep(0.2)
     activate()
     time.sleep(0.2)
     default()
