@@ -95,11 +95,11 @@ def walk_control(direction, distance, steps, hw_face):
 
     stationary_step = stand(127, 0, 0, 4)
 
-    full_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5)
-    full_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6)
+    full_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.cos(direction * 6.28) * 63 * distance, 5)
+    full_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.cos(direction * 6.28) * 63 * distance, 6)
 
-    full_inv_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6)
-    full_inv_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5)
+    full_inv_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.cos(direction * 6.28) * 63 * distance, 6)
+    full_inv_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.cos(direction * 6.28) * 63 * distance, 5)
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(63, 0, 0, 6)
