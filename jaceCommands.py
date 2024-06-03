@@ -57,7 +57,7 @@ def turn_around(height, offset, hw_face):
 
 
 
-def stand(height=127, lean=0, roll=0, leg=4): 
+def stand(height=127, lean=0, roll=0, leg=4, offset=0): 
     # array is the given servo array
     # height (default=127) goes from 0-255
     # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
@@ -78,17 +78,17 @@ def stand(height=127, lean=0, roll=0, leg=4):
     array = np.zeros((3,4))
 
     if leg == 8:
-        array += stand(height, lean, roll, 2)
-        array += stand(height, lean, roll, 3)
+        array += stand(height - offset, lean, roll, 2)
+        array += stand(height + offset, lean, roll, 3)
     elif leg == 7:
-        array += stand(height, lean, roll, 0)
-        array += stand(height, lean, roll, 1)
+        array += stand(height - offset, lean, roll, 0)
+        array += stand(height + offset, lean, roll, 1)
     elif leg == 6:
-        array += stand(height, lean, roll, 1)
-        array += stand(height, lean, roll, 2)
+        array += stand(height - offset, lean, roll, 1)
+        array += stand(height + offset, lean, roll, 2)
     elif leg == 5:
-        array += stand(height, lean, roll, 0)
-        array += stand(height, lean, roll, 3)
+        array += stand(height - offset, lean, roll, 0)
+        array += stand(height + offset, lean, roll, 3)
     elif leg == 4:
         array += stand(height, lean, roll, 0)
         array += stand(height, lean, roll, 1)
