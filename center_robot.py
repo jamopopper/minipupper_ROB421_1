@@ -246,6 +246,21 @@ def look_left():
             "ry": 0, 
             "dpady": 0, 
             "dpadx": 0})
+def look_pos(x_pos, y_pos):
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 0, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": x_pos, 
+            "message_rate": 20, 
+            "ry": y_pos, 
+            "dpady": 0, 
+            "dpadx": 0})
 if __name__ == '__main__':
     centered_x = False
     centered_y = False
@@ -331,6 +346,15 @@ if __name__ == '__main__':
                         default()
                         print("first center")
                 else:
+                    start = time.time()
+                    end = time.time()
+                    while end - start < 5:
+                        x_p = (avg_center[0] - 315) / 250
+                        y_p = (avg_center[1] - 235) / 170
+                        look_pos(x_p, y_p)
+                        end = time.time()
+                    break
+                        
                     if avg_center[0] < 305:
                         look_left()
                         print("look left")
@@ -356,6 +380,7 @@ if __name__ == '__main__':
                     if (true_x and true_y):
                         print("true centered")
                         break
+                        
         else:
             turn_left()
             
