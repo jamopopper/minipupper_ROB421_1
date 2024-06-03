@@ -52,86 +52,96 @@ def stand(height=127, lean=0, roll=0, leg=4):
     # leg 4 is all legs, 5 is front-left and back-right, 6 is front-right and back-left
     # leg 7 is front legs, leg 8 is back legs
 
+    servo_offset = 0.2
+    lean_scale = 0.5
+    roll_shoulder_scale = 0.4
+    roll_leg_scale = 0.15
     array = np.zeros((3,4))
 
     if leg == 8:
-        array[0, 2] = (roll/64) * 0.4
-        array[0, 3] = (roll/64) * 0.4
-        array[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        array[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
+        array += stand(height, lean, roll, 2)
+        array += stand(height, lean, roll, 3)
     elif leg == 7:
-        array[0, 0] = (roll/64) * 0.4
-        array[0, 1] = (roll/64) * 0.4
-        array[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        array[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 1)
     elif leg == 6:
-        array[0, 1] = (roll/64) * 0.4
-        array[0, 2] = (roll/64) * 0.4
-        array[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
-        array[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
+        array += stand(height, lean, roll, 1)
+        array += stand(height, lean, roll, 2)
     elif leg == 5:
-        array[0, 0] = (roll/64) * 0.4
-        array[0, 3] = (roll/64) * 0.4
-        array[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        array[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 3)
     elif leg == 4:
-        array[0, 0] = (roll/64) * 0.4
-        array[0, 1] = (roll/64) * 0.4
-        array[0, 2] = (roll/64) * 0.4
-        array[0, 3] = (roll/64) * 0.4
-        array[1, 0] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[1, 1] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[1, 2] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-        array[1, 3] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-        array[2, 0] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        array[2, 1] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
-        array[2, 2] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        array[2, 3] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
+        array += stand(height, lean, roll, 0)
+        array += stand(height, lean, roll, 1)
+        array += stand(height, lean, roll, 2)
+        array += stand(height, lean, roll, 3)
     else:
-        if leg == 0 or leg == 2:
-            array[0, leg] = (roll/64) * 0.4
-            array[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + ((roll/64) * 0.2))
-            array[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2 + ((roll/64) * 0.2))
-        else:
-            array[0, leg] = (roll/64) * 0.4
-            array[1, leg] = ((3.14/2.7) * ((256-height)/256) + 0.2 + ((lean/64) * 0.5) + -((roll/64) * 0.2))
-            array[2, leg] = -((3.14/2.7) * ((256-height)/256) + 0.2 + -((roll/64) * 0.2))
-    
+        side = -1
+        if leg == 0 or leg == 2: side = 1
+        array[0, leg] = (roll/64) * roll_shoulder_scale
+        array[1, leg] = ((3.14/2.7) * ((256-height)/256) + servo_offset + ((lean/64) * lean_scale) + ((roll/64) * roll_leg_scale * side))
+        array[2, leg] = -((3.14/2.7) * ((256-height)/256) + servo_offset + ((roll/64) * roll_leg_scale * side))
+
     return array
 
-def walk_control(direction, lead_set, frame):
-    # array is the given servo array
+def walk_control(direction, distance, steps, hw_face):
     # direction is the direction you want to step toward and goes from 0-1
-    # lead_set is the set of feet that are leading the step
-    # frame is how far you are through the step and goes from 0-1
+    # distance is how far the steps should be
 
-    #DEPRICATED# direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
+    #DEPREICATED# direction 0 is forward, 0.25 is right, 0.5 is backward, 0.75 is left
     # direction 0 is forward, 1 is right, 2 is left, 3 is backward
     # lead_set when 0 is front-left and back-right, and 1 is front-right and back-left
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
-    array = np.zeros((3,4))
+    stationary_step = stand(127, 0, 0, 4)
 
+    full_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5)
+    full_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6)
 
+    full_inv_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6)
+    full_inv_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5)
 
-    ### PERFECT GAIT BUT IM GIVING UP ON IT
+    mid_step = stand(127, 0, 0, 5)
+    mid_step += stand(63, 0, 0, 6)
+
+    mid_inv_step = stand(127, 0, 0, 6)
+    mid_inv_step += stand(63, 0, 0, 5)
+
+    set_servos(hw_face, stationary_step)
+    time.sleep(0.2)
+    set_servos(hw_face, mid_step)
+    time.sleep(0.2)
+
+    for i in range(steps):
+        print(i)
+        for j in range(4):
+            if (j == 0):
+                set_servos(hw_face, full_step)
+            elif (j == 1):
+                set_servos(hw_face, mid_inv_step)
+            elif (j == 2):
+                set_servos(hw_face, full_inv_step)
+            elif (j == 3):
+                set_servos(hw_face, mid_step)
+            else:
+                time.sleep(1)
+            time.sleep(0.2)
+
+    ### DEPRICATED ###
+    # local_pi = 3.14
+    # local_pi_double = local_pi * 2
+
+    # array1 = np.zeros((3,4))
+    # array2 = np.zeros((3,4))
 
     # if lead_set == 0:
-    #     array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
-    #     array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
+    #     array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
+    #     array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
     # else:
-    #     array = stand(127 - (np.sin(3.14*frame)), np.cos(6.28 * direction) * 2*(frame-0.5) * 64, np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 6)
-    #     array = stand(127, -np.cos(6.28 * direction) * 2*(frame-0.5) * 64, -np.sin(6.28 * direction) * 2*(frame-0.5) * 64, 5)
+    #     array1 = stand(127 - (np.sin(local_pi*frame)), np.cos(local_pi * direction) * 2*(frame-0.5) * 64, np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 6)
+    #     array2 = stand(127, -np.cos(local_pi * direction) * 2*(frame-0.5) * 64, -np.sin(local_pi * direction) * 2*(frame-0.5) * 64, 5)
 
-    return array
+    # return (array1 + array2)
 
 def dance(frame): 
     # frame goes from 0-1
