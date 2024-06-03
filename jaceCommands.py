@@ -57,7 +57,7 @@ def turn_around(height, offset, hw_face):
 
 
 
-def stand(height=127, lean=0, roll=0, leg=4): 
+def stand(height=127, lean=0, roll=0, leg=4, offset=0): 
     # array is the given servo array
     # height (default=127) goes from 0-255
     # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
@@ -78,17 +78,17 @@ def stand(height=127, lean=0, roll=0, leg=4):
     array = np.zeros((3,4))
 
     if leg == 8:
-        array += stand(height, lean, roll, 2)
-        array += stand(height, lean, roll, 3)
+        array += stand(height - offset, lean, roll, 2)
+        array += stand(height + offset, lean, roll, 3)
     elif leg == 7:
-        array += stand(height, lean, roll, 0)
-        array += stand(height, lean, roll, 1)
+        array += stand(height - offset, lean, roll, 0)
+        array += stand(height + offset, lean, roll, 1)
     elif leg == 6:
-        array += stand(height, lean, roll, 1)
-        array += stand(height, lean, roll, 2)
+        array += stand(height - offset, lean, roll, 1)
+        array += stand(height + offset, lean, roll, 2)
     elif leg == 5:
-        array += stand(height, lean, roll, 0)
-        array += stand(height, lean, roll, 3)
+        array += stand(height - offset, lean, roll, 0)
+        array += stand(height + offset, lean, roll, 3)
     elif leg == 4:
         array += stand(height, lean, roll, 0)
         array += stand(height, lean, roll, 1)
@@ -114,11 +114,14 @@ def walk_control(direction, distance, steps, hw_face):
 
     stationary_step = stand(127, 0, 0, 4)
 
-    full_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5)
-    full_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6)
 
-    full_inv_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6)
-    full_inv_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5)
+    (-np.cos(direction * 6.28) -np.sin(direction * 6.28)) * 63 * distance
+
+    full_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63 * distance)
+    full_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63 * distance)
+
+    full_inv_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63 * distance)
+    full_inv_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63 * distance)
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(31, 0, 0, 6)
