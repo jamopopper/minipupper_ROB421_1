@@ -95,11 +95,11 @@ def walk_control(direction, distance, steps, hw_face):
 
     stationary_step = stand(127, 0, 0, 4)
 
-    full_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.cos(direction * 6.28) * 63 * distance, 5)
-    full_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.cos(direction * 6.28) * 63 * distance, 6)
+    full_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5)
+    full_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6)
 
-    full_inv_step = stand(127, -np.sin(direction * 6.28) * 63 * distance, -np.cos(direction * 6.28) * 63 * distance, 6)
-    full_inv_step += stand(127, np.sin(direction * 6.28) * 63 * distance, np.cos(direction * 6.28) * 63 * distance, 5)
+    full_inv_step = stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6)
+    full_inv_step += stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5)
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(63, 0, 0, 6)
@@ -114,17 +114,16 @@ def walk_control(direction, distance, steps, hw_face):
         print(i)
         for j in range(4):
             if (j == 0):
-                keyframe(0.2, mid_step, full_step, hw_face)
+                keyframe(0.15, mid_step, full_step, hw_face)
             elif (j == 1):
-                keyframe(0.2, full_step, mid_inv_step, hw_face)
+                keyframe(0.15, full_step, mid_inv_step, hw_face)
             elif (j == 2):
-                keyframe(0.2, mid_inv_step, full_inv_step, hw_face)
+                keyframe(0.15, mid_inv_step, full_inv_step, hw_face)
             elif (j == 3):
-                keyframe(0.2, full_inv_step, mid_step, hw_face)
+                keyframe(0.15, full_inv_step, mid_step, hw_face)
             else:
                 time.sleep(1)
                 print("bad times ahead!")
-            time.sleep(0.2)
 
     keyframe(0.2, mid_step, stationary_step, hw_face)
 
