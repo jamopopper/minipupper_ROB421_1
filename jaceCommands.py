@@ -8,7 +8,7 @@ import time
 
 def set_servos(hw_face, state):
     hw_face.set_actuator_postions(state)
-    time.sleep(0.05)
+    time.sleep(0.02)
     return True
 
 def keyframe(duration, start_pos, end_pos, hw_face):
@@ -23,7 +23,7 @@ def keyframe(duration, start_pos, end_pos, hw_face):
                 array[i, j] = (start_pos[i, j] * (1-current_step)) + (end_pos[i, j] * current_step)
         print(array)
         set_servos(hw_face, array)
-    #set_servos(hw_face, end_pos)
+    set_servos(hw_face, end_pos)
 
 
     return array
