@@ -133,11 +133,11 @@ def walk_control(direction, distance, steps, hw_face):
     print("created full inv step")
 
     mid_step = stand(127, 0, 0, 5)
-    mid_step += stand(95, 0, 0, 6)
+    mid_step += stand(63, 0, 0, 6)
     print("created mid step")
 
     mid_inv_step = stand(127, 0, 0, 6)
-    mid_inv_step += stand(95, 0, 0, 5)
+    mid_inv_step += stand(63, 0, 0, 5)
     print("created mid inv step")
 
     
@@ -147,16 +147,16 @@ def walk_control(direction, distance, steps, hw_face):
         print(i)
         for j in range(4):
             if (j == 0):
-                keyframe(0.1, mid_step, full_step, hw_face)
+                keyframe(0.05, mid_step, full_step, hw_face)
                 print("in step")
-                time.sleep(0.1)
+                time.sleep(0.05)
             elif (j == 1):
                 keyframe(0.1, full_step, mid_inv_step, hw_face)
                 print("to out step")
             elif (j == 2):
-                keyframe(0.1, mid_inv_step, full_inv_step, hw_face)
+                keyframe(0.05, mid_inv_step, full_inv_step, hw_face)
                 print("out step")
-                time.sleep(0.1)
+                time.sleep(0.05)
             elif (j == 3):
                 keyframe(0.1, full_inv_step, mid_step, hw_face)
                 print("to out step")
