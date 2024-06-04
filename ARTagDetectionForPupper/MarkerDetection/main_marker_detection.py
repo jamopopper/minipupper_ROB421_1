@@ -11,9 +11,12 @@ marker_dict =  cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_250)
 
 param_markers = aruco.DetectorParameters()
 detector = aruco.ArucoDetector(marker_dict, param_markers)
-
+height = 1080
+width = 1920
 #capture video
 cap = cv.VideoCapture(1) #number indicates what camera you are using. likely 0 by default, 1 or 2 if multiple plugged in
+cap.set(cv.CAP_PROP_FRAME_HEIGHT, height)
+cap.set(cv.CAP_PROP_FRAME_WIDTH, width)
 
 #create a while loop to capture footage. Ends if "q" is pressed on the keyboard
 while True:

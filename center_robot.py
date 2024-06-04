@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../StanfordQuadruped')
-
+import serial
 import cv2 as cv
 from cv2 import aruco
 
@@ -261,12 +261,28 @@ def look_pos(x_pos, y_pos):
             "ry": y_pos, 
             "dpady": 0, 
             "dpadx": 0})
+def jump():
+    drive_pub.send({"L1": 0, 
+            "R1": 0, 
+            "x": 1, 
+            "circle": 0, 
+            "triangle": 0, 
+            "L2": 0, 
+            "R2": 0, 
+            "ly": 0, 
+            "lx": 0, 
+            "rx": 0, 
+            "message_rate": 20, 
+            "ry": 0, 
+            "dpady": 0, 
+            "dpadx": 0})
 if __name__ == '__main__':
+    ser = serial.Serial('/dev/ttyACM0', 115200, timeout=0.5)
+    ser.reset_input_buffer()
+    line = ""
     centered_x = False
     centered_y = False
     done = False
-    true_x = False
-    true_y = False
     first_center = True
     activate()
     time.sleep(0.2)
@@ -319,6 +335,20 @@ if __name__ == '__main__':
                 #print(ids, "  ", corners)
                 avg_center = [(top_right[0] + top_left[0])/2, (top_left[1] + bottom_left[1])/2]
                 print(avg_center)
+                if ser.in_waiting > 0:
+                    line = ser.readline().decode('utf-8').rstrip()
+                    if line == "Hit!" or line == "Critical Hit!":
+                        trot()
+                        time.sleep(0.2)
+                        default()
+                        time.sleep(0.2)
+                        jump()
+                        time.sleep(0.1)
+                        default()
+                        print("I was hit")
+                        done = True
+                        break
+                        
                 if first_center:
                     if avg_center[0] < 285:
                         turn_left()
@@ -356,32 +386,6 @@ if __name__ == '__main__':
                         end = time.time()
                     done = True
                     break
-                        
-                    if avg_center[0] < 305:
-                        look_left()
-                        print("look left")
-                        true_x = False
-                    elif avg_center[0] > 325:
-                        print("look right")
-                        look_right()
-                        true_x = False
-                    else:
-                        true_x = True
-                    
-                    if avg_center[1] < 225:
-                        look_up()
-                        print("look up")
-                        true_y = False
-                    elif avg_center[1] > 245:
-                        look_down()
-                        print("look down")
-                        true_y = False
-                    else:
-                        true_y = True
-                        
-                    if (true_x and true_y):
-                        print("true centered")
-                        break
             if done:
                 break
                         
