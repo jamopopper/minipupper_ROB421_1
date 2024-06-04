@@ -28,7 +28,7 @@ def keyframe(duration, start_pos, end_pos, hw_face):
 
 def look_around(height=127, offset=0):
     # positive looks right, negative looks left
-    # 0-63
+    # 0-1
     store1 = stand(height, 0, offset * 63, 7)
     store2 = stand(height, 0, offset * -63, 8)
     return (store1 + store2)

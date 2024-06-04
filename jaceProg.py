@@ -83,7 +83,12 @@ def main(use_imu=False):
         # jc.walk_control(0.75, 0.5, 4, hardware_interface)      
         # time.sleep(1)
 
+        store = jc.look_around(127, 1)
+        jc.set_servos(hardware_interface, store)
+        time.sleep(1)
+
         jc.turn_around(127, 1, hardware_interface)
+        time.sleep(1)
 
 
 
