@@ -163,7 +163,7 @@ def turn_right():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": 0.4, 
+            "rx": 0.2, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
@@ -282,6 +282,7 @@ if __name__ == '__main__':
     line = ""
     centered_x = False
     centered_y = False
+    direction = True
     done = False
     first_center = True
     activate()
@@ -351,10 +352,12 @@ if __name__ == '__main__':
                         
                 if first_center:
                     if avg_center[0] < 285:
-                        turn_right()
+                        direction = True
+                        turn_left()
                         print("left")
                         centered_x = False
                     elif avg_center[0] > 345:
+                        direction = False
                         turn_right()
                         print("right")
                         centered_x = False
@@ -390,7 +393,23 @@ if __name__ == '__main__':
                 break
                         
         else:
-            turn_left()
+            if ser.in_waiting > 0:
+                    line = ser.readline().decode('utf-8').rstrip()
+                    if line == "Hit!" or line == "Critical Hit!":
+                        trot()
+                        time.sleep(0.2)
+                        default()
+                        time.sleep(0.2)
+                        jump()
+                        time.sleep(0.1)
+                        default()
+                        print("I was hit")
+                        done = True
+                        break
+            if direction:
+                turn_left()
+            else:
+                turn_right()
             
 
         if done:
