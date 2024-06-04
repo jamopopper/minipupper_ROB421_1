@@ -336,6 +336,7 @@ if __name__ == '__main__':
                 #print(ids, "  ", corners)
                 avg_center = [(top_right[0] + top_left[0])/2, (top_left[1] + bottom_left[1])/2]
                 print(avg_center)
+                '''
                 if ser.in_waiting > 0:
                     line = ser.readline().decode('utf-8').rstrip()
                     if line == "Hit!" or line == "Critical Hit!":
@@ -349,7 +350,7 @@ if __name__ == '__main__':
                         print("I was hit")
                         done = True
                         break
-                        
+                '''        
                 if first_center:
                     if avg_center[0] < 285:
                         direction = True
@@ -393,6 +394,7 @@ if __name__ == '__main__':
                 break
                         
         else:
+            '''
             if ser.in_waiting > 0:
                     line = ser.readline().decode('utf-8').rstrip()
                     if line == "Hit!" or line == "Critical Hit!":
@@ -406,6 +408,7 @@ if __name__ == '__main__':
                         print("I was hit")
                         done = True
                         break
+            '''
             if direction:
                 turn_left()
             else:
