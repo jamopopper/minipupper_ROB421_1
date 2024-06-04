@@ -138,12 +138,16 @@ def walk_control(direction, distance, steps, hw_face):
         for j in range(4):
             if (j == 0):
                 keyframe(0.1, mid_step, full_step, hw_face)
+                print("in step")
             elif (j == 1):
                 keyframe(0.1, full_step, mid_inv_step, hw_face)
+                print("to out step")
             elif (j == 2):
                 keyframe(0.1, mid_inv_step, full_inv_step, hw_face)
+                print("out step")
             elif (j == 3):
                 keyframe(0.1, full_inv_step, mid_step, hw_face)
+                print("to out step")
             else:
                 time.sleep(1)
                 print("bad times ahead!")
