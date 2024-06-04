@@ -113,22 +113,28 @@ def walk_control(direction, distance, steps, hw_face):
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
     stationary_step = stand(127, 0, 0, 4)
+    print("created stationary")
 
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
     #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
     #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
+
     full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
     full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
+    print("created full step")
 
     full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
     full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    print("created full inv step")
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(95, 0, 0, 6)
+    print("created mid step")
 
     mid_inv_step = stand(127, 0, 0, 6)
     mid_inv_step += stand(95, 0, 0, 5)
+    print("created mid inv step")
 
     
     keyframe(0.2, stationary_step, mid_step, hw_face)
