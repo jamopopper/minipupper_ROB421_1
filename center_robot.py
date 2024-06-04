@@ -351,7 +351,7 @@ if __name__ == '__main__':
                         
                 if first_center:
                     if avg_center[0] < 285:
-                        turn_left()
+                        turn_right()
                         print("left")
                         centered_x = False
                     elif avg_center[0] > 345:
@@ -381,7 +381,7 @@ if __name__ == '__main__':
                     end = time.time()
                     while end - start < 5:
                         x_p = (avg_center[0] - 315) / 310
-                        y_p = -((avg_center[1] - 450) / 95)
+                        y_p = -((avg_center[1] - 400) / 95)
                         look_pos(x_p, y_p)
                         end = time.time()
                     done = True
