@@ -17,11 +17,9 @@ def keyframe(duration, start_pos, end_pos, hw_face):
     while (start_time + duration) > time.time():
     #while (time.time() - start_time) < duration:
         current_step = (time.time() - start_time) / duration
-        print(current_step)
         for i in range(3):
             for j in range(4):
                 array[i, j] = (start_pos[i, j] * (1-current_step)) + (end_pos[i, j] * current_step)
-        print(array)
         set_servos(hw_face, array)
     set_servos(hw_face, end_pos)
 
