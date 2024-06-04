@@ -74,12 +74,16 @@ def main(use_imu=False):
         # store2 = jc.look_right(127)
         # jc.keyframe(2, store1, store2, hardware_interface)
 
+        print("forward")
         jc.walk_control(0, 0.5, 4, hardware_interface)      
         time.sleep(1)
+        print("right")
         jc.walk_control(0.25, 0.5, 4, hardware_interface)      
         time.sleep(1)
+        print("backward")
         jc.walk_control(0.5, 0.5, 4, hardware_interface)      
         time.sleep(1)
+        print("left")
         jc.walk_control(0.75, 0.5, 4, hardware_interface)      
         time.sleep(1)
 
