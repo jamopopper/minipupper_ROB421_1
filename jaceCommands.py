@@ -77,6 +77,8 @@ def stand(height=127, lean=0, roll=0, leg=4, offset=0):
     roll_leg_scale = 0.15
     array = np.zeros((3,4))
 
+    print(height, lean, roll, leg, offset)
+
     if leg == 8:
         array += stand(height - offset, lean, roll, 2)
         array += stand(height + offset, lean, roll, 3)
@@ -115,11 +117,14 @@ def walk_control(direction, distance, steps, hw_face):
     stationary_step = stand(127, 0, 0, 4)
 
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
-    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (1) * 63)
-    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (1) * 63)
+    #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
+    #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
+    #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
+    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
+    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
 
-    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-1) * 63)
-    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-1) * 63)
+    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(31, 0, 0, 6)
