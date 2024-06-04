@@ -163,7 +163,7 @@ def turn_right():
             "R2": 0, 
             "ly": 0, 
             "lx": 0, 
-            "rx": 0.2, 
+            "rx": 0.4, 
             "message_rate": 20, 
             "ry": 0, 
             "dpady": 0, 
