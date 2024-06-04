@@ -49,7 +49,7 @@ def turn_around(height, offset, hw_face):
     leg_set_1 = stand(127, leg=5) # front left and back right
     leg_set_2 = stand(127, leg=6) # front right and back left
 
-    set_servos((store1a + store1b + store2a + store2b), hw_face)
+    set_servos(hw_face, (store1a + store1b + store2a + store2b))
     keyframe(0.1, (store1a + store1b + store2a + store2b), (leg_up_1 + store1a + store2b), hw_face)
     keyframe(0.1, (leg_up_1 + store1a + store2b), (leg_set_1 + store1a + store2b), hw_face)
     keyframe(0.1, (leg_set_1 + store1a + store2b), (leg_set_1 + leg_up_2), hw_face)
