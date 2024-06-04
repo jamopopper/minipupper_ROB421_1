@@ -6,36 +6,34 @@ import numpy as np
 import time
 
 
-def set_servos(hw_face, state):
+def set_servos(hw_face, state): # WORKS
     hw_face.set_actuator_postions(state)
     time.sleep(0.02)
     return True
 
-def keyframe(duration, start_pos, end_pos, hw_face):
+def keyframe(duration, start_pos, end_pos, hw_face): # WORKS
     start_time = time.time()
     array = np.zeros((3,4))
     while (start_time + duration) > time.time():
     #while (time.time() - start_time) < duration:
         current_step = (time.time() - start_time) / duration
-        print(current_step)
         for i in range(3):
             for j in range(4):
                 array[i, j] = (start_pos[i, j] * (1-current_step)) + (end_pos[i, j] * current_step)
-        print(array)
         set_servos(hw_face, array)
     set_servos(hw_face, end_pos)
 
 
     return array
 
-def look_around(height=127, offset=0):
+def look_around(height=127, offset=0): # WORKS
     # positive looks right, negative looks left
-    # 0-63
+    # 0-1
     store1 = stand(height, 0, offset * 63, 7)
     store2 = stand(height, 0, offset * -63, 8)
     return (store1 + store2)
 
-def turn_around(height, offset, hw_face):
+def turn_around(height, offset, hw_face): # WORKS
 
     store1a = stand(height, 0, offset * 63, 0) # front right
     store1b = stand(height, 0, offset * 63, 1) # front left
@@ -49,15 +47,15 @@ def turn_around(height, offset, hw_face):
     leg_set_1 = stand(127, leg=5) # front left and back right
     leg_set_2 = stand(127, leg=6) # front right and back left
 
-    set_servos((store1a + store1b + store2a + store2b), hw_face)
-    keyframe(0.1, (store1a + store1b + store2a + store2b), (leg_up_1 + store1a + store2b), hw_face)
-    keyframe(0.1, (leg_up_1 + store1a + store2b), (leg_set_1 + store1a + store2b), hw_face)
-    keyframe(0.1, (leg_set_1 + store1a + store2b), (leg_set_1 + leg_up_2), hw_face)
-    keyframe(0.1, (leg_set_1 + leg_up_2), (leg_set_1 + leg_set_2), hw_face)
+    set_servos(hw_face, (store1a + store1b + store2a + store2b))
+    keyframe(0.1, (store1a + store1b + store2a + store2b), (leg_up_2 + store1a + store2b), hw_face)
+    keyframe(0.1, (leg_up_2 + store1a + store2b), (leg_set_2 + store1a + store2b), hw_face)
+    keyframe(0.1, (leg_set_2 + store1a + store2b), (leg_set_2 + leg_up_1), hw_face)
+    keyframe(0.1, (leg_set_2 + leg_up_1), (leg_set_2 + leg_set_1), hw_face)
 
 
 
-def stand(height=127, lean=0, roll=0, leg=4, offset=0): 
+def stand(height=127, lean=0, roll=0, leg=4, offset=0): # WORKS
     # array is the given servo array
     # height (default=127) goes from 0-255
     # lean (default=0) goes from 0-63 positive and negative, positive moves body forward
@@ -68,7 +66,7 @@ def stand(height=127, lean=0, roll=0, leg=4, offset=0):
     # upper joints (1) go from 0.1 to 0.728
     # lower joints (2) go from -0.1 to -0.728
     # leg 0 is front-right, 1 is front-left, 2 is back-right, 3 is back-left
-    # leg 4 is all legs, 5 is front-left and back-right, 6 is front-right and back-left
+    # leg 4 is all legs, 5 is front-right and back-left, 6 is front-left and back-right
     # leg 7 is front legs, leg 8 is back legs
 
     servo_offset = 0.2
@@ -76,6 +74,8 @@ def stand(height=127, lean=0, roll=0, leg=4, offset=0):
     roll_shoulder_scale = 0.4
     roll_leg_scale = 0.15
     array = np.zeros((3,4))
+
+    print(height, lean, roll, leg, offset)
 
     if leg == 8:
         array += stand(height - offset, lean, roll, 2)
@@ -115,11 +115,14 @@ def walk_control(direction, distance, steps, hw_face):
     stationary_step = stand(127, 0, 0, 4)
 
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
-    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (1) * 63)
-    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (1) * 63)
+    #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
+    #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
+    #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
+    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
+    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
 
-    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-1) * 63)
-    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-1) * 63)
+    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
 
     mid_step = stand(127, 0, 0, 5)
     mid_step += stand(31, 0, 0, 6)
@@ -163,7 +166,7 @@ def walk_control(direction, distance, steps, hw_face):
 
     # return (array1 + array2)
 
-def dance(frame): 
+def dance(frame): # WORKS
     # frame goes from 0-1
 
     # array is the given servo array
