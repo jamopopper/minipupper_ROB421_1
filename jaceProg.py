@@ -65,15 +65,16 @@ def main(use_imu=False):
 
     while True:
 
-        ## Look left then right repeatedly
-        # store1 = jc.look_left(127)
-        # store2 = jc.look_right(127)
-        # jc.keyframe(2, store2, store1, hardware_interface)
+        ## Stand
+        storeDefault = jc.stand()
+        storeA = jc.stand(5)
+        storeB = jc.stand(245)
+        jc.keyframe(1, storeDefault, storeA, hardware_interface)
+        jc.keyframe(1, storeA, storeB, hardware_interface)
+        jc.keyframe(1, storeB, storeDefault, hardware_interface)
+        time.sleep(1)
 
-        # store1 = jc.look_left(127)
-        # store2 = jc.look_right(127)
-        # jc.keyframe(2, store1, store2, hardware_interface)
-
+        ## Walk forward, right, backward, left
         print("forward")
         jc.walk_control(0, 0.75, 4, hardware_interface)      
         time.sleep(1)
@@ -87,10 +88,24 @@ def main(use_imu=False):
         jc.walk_control(0.75, 0.75, 4, hardware_interface)      
         time.sleep(1)
 
+        ## Look around
+        store1 = jc.look_around(127, 1)
+        store2 = jc.look_around(127, -1)
+        store3 = jc.look_around(127, 0)
+        jc.keyframe(0.5, store3, store1, hardware_interface)
+        jc.keyframe(1, store1, store2, hardware_interface)
+        jc.keyframe(0.5, store2, store3, hardware_interface)
+        time.sleep(1)
         
+        ## Turn a little
+        jc.turn_around(127, 1, hardware_interface)
+        time.sleep(0.5)
+        jc.turn_around(127, -1, hardware_interface)
+        jc.turn_around(127, -1, hardware_interface)
+        time.sleep(0.5)
+        jc.turn_around(127, 1, hardware_interface)
+        time.sleep(1)
 
-        # jc.turn_around(127, 1, hardware_interface)
-        
 
 
 
