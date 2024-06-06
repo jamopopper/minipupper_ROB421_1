@@ -69,6 +69,10 @@ def stand(height=127, lean=0, roll=0, leg=4, offset=0): # WORKS
     # leg 4 is all legs, 5 is front-right and back-left, 6 is front-left and back-right
     # leg 7 is front legs, leg 8 is back legs
 
+    # TEMP
+    offset = 0
+    # TEMP
+
     servo_offset = 0.2
     lean_scale = 0.5
     roll_shoulder_scale = 0.4
@@ -113,22 +117,28 @@ def walk_control(direction, distance, steps, hw_face):
     # frame when 0 is back step, 0.5 is neutral, and 1 is fully stepped forward
 
     stationary_step = stand(127, 0, 0, 4)
+    print("created stationary")
 
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
     #  np.cos(direction * 6.28) + np.sin(direction * 6.28)
     #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
     #  -np.cos(direction * 6.28) + -np.sin(direction * 6.28)
-    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
-    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + np.sin(direction * 6.28)) * 63)
 
-    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
-    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (-np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    full_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    full_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    print("created full step")
+
+    full_inv_step = stand(127, np.cos(direction * 6.28) * 63 * distance, np.sin(direction * 6.28) * 63 * distance, 6, (np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    full_inv_step += stand(127, -np.cos(direction * 6.28) * 63 * distance, -np.sin(direction * 6.28) * 63 * distance, 5, (np.cos(direction * 6.28) + -np.sin(direction * 6.28)) * 63)
+    print("created full inv step")
 
     mid_step = stand(127, 0, 0, 5)
-    mid_step += stand(31, 0, 0, 6)
+    mid_step += stand(63, 0, 0, 6)
+    print("created mid step")
 
     mid_inv_step = stand(127, 0, 0, 6)
-    mid_inv_step += stand(31, 0, 0, 5)
+    mid_inv_step += stand(63, 0, 0, 5)
+    print("created mid inv step")
 
     
     keyframe(0.2, stationary_step, mid_step, hw_face)
@@ -137,13 +147,19 @@ def walk_control(direction, distance, steps, hw_face):
         print(i)
         for j in range(4):
             if (j == 0):
-                keyframe(0.1, mid_step, full_step, hw_face)
+                keyframe(0.05, mid_step, full_step, hw_face)
+                print("in step")
+                time.sleep(0.05)
             elif (j == 1):
                 keyframe(0.1, full_step, mid_inv_step, hw_face)
+                print("to out step")
             elif (j == 2):
-                keyframe(0.1, mid_inv_step, full_inv_step, hw_face)
+                keyframe(0.05, mid_inv_step, full_inv_step, hw_face)
+                print("out step")
+                time.sleep(0.05)
             elif (j == 3):
                 keyframe(0.1, full_inv_step, mid_step, hw_face)
+                print("to out step")
             else:
                 time.sleep(1)
                 print("bad times ahead!")
